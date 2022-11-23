@@ -47,7 +47,7 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
       query: {
         listOfParticipants: JSON.stringify(listOfParticipants),
         participantsShare: JSON.stringify(participantsShare),
-        nomeRateio: nomeRateio
+        nomeRateio: nomeRateio,
       },
     });
   }
@@ -88,11 +88,13 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
           {typesOfExpenses.map((expenseName: string) => (
             <div key={expenseName}>
               <div className="shadow-custom py-2 px-5 rounded m-2">
-                <strong className="capitalize mb-1 block">{expenseName}</strong>
+                <strong className="capitalize mb-1 block text-center">
+                  {expenseName}
+                </strong>
                 {names.map((name: string) => (
                   <div
                     key={name}
-                    className="flex items-center gap-2 capitalize"
+                    className="flex items-center gap-2 capitalize text-lg"
                   >
                     <input
                       type="checkbox"
@@ -108,12 +110,14 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
           ))}
         </div>
       </div>
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
-      >
-        Calcular
-      </button>
+      <div className="flex justify-center w-full">
+        <button
+          type="submit"
+          className="mt-4 px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+        >
+          Calcular
+        </button>
+      </div>
     </form>
   );
 }

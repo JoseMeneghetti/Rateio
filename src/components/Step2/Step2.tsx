@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { PlusCircle } from "phosphor-react";
 import { ListOfParticipants } from "../../pages";
 
@@ -14,6 +14,7 @@ export default function Step2({
 }: Props) {
   const [openExpenses, setOpenExpenses] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const nameRef = useRef<any>(null);
 
   function addParticipant(event: FormEvent) {
     event.preventDefault();
@@ -22,21 +23,23 @@ export default function Step2({
 
     const dataForm = Object.fromEntries(form);
 
-    const duplicated = dataForm.description !== '' && listOfParticipants.find(
-      (list: ListOfParticipants) => list.description === dataForm.description
-    );
+    const duplicated =
+      dataForm.description !== "" &&
+      listOfParticipants.find(
+        (list: ListOfParticipants) => list.description === dataForm.description
+      );
 
     if (duplicated) {
       alert("Tipo de gasto ja cadastrado");
       return;
     }
 
-    console.log(dataForm);
     setListOfParticipants([...listOfParticipants, dataForm]);
 
     if (formRef) {
       formRef?.current?.reset();
     }
+
     setOpenEdit(false);
     setOpenExpenses(false);
   }
@@ -63,11 +66,17 @@ export default function Step2({
               placeholder="Nome"
               className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
               required
+              ref={nameRef}
             ></input>
 
             <button
               type="button"
-              onClick={() => setOpenExpenses(true)}
+              onClick={() => {
+                if (nameRef?.current?.value !== "") {
+                  console.log(nameRef?.current?.value);
+                  setOpenExpenses(true);
+                }
+              }}
               className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
             >
               <PlusCircle />
@@ -86,26 +95,27 @@ export default function Step2({
             <button
               type="button"
               onClick={() => setOpenEdit(true)}
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
             >
               Sim
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
             >
               Nao
             </button>
           </div>
 
           <div
-            className="flex flex-row justify-start items-center w-full gap-4"
+            className="flex flex-col lg:flex-row justify-start items-center w-full gap-4"
             style={openEdit ? { display: "flex" } : { display: "none" }}
           >
+            <label>No que gastou?</label>
             <input
               id="description"
               name="description"
-              placeholder="No que gastou?"
+              placeholder="Nome do gasto"
               className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
               required={openEdit}
               defaultValue={""}
@@ -118,7 +128,6 @@ export default function Step2({
               type="number"
               className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
               required={openEdit}
-              defaultValue={0}
             ></input>
             <button
               type="submit"
@@ -136,30 +145,30 @@ export default function Step2({
             className="bg-yellow-500 rounded-xl w-full flex flex-row justify-between p-2"
             key={participant.participant}
           >
-            <div>
+            <div className="flex items-center">
               <label>Nome:</label>
-              <span className="px-4 text-lg w-full font-bold ">
+              <span className="px-4 lg:text-lg w-full font-bold ">
                 {participant.participant}
               </span>
             </div>
-            <div>
+            <div className="flex items-center">
               {participant.description ? (
                 <>
                   <label>Gastou em:</label>
-                  <span className="px-4 text-lg w-full font-bold ">
+                  <span className="px-4 lg:text-lg w-full font-bold ">
                     {participant.description}
                   </span>
                 </>
               ) : (
-                <span className="px-4 text-lg w-full font-bold ">
+                <span className="px-4 lg:text-lg w-full font-bold text-center">
                   Nao gastou em nada
                 </span>
               )}
             </div>
-            <div>
+            <div className="flex items-center">
               <label>Quanto Gastou:</label>
-              <span className="px-4 text-lg w-full font-bold ">
-                R$: {participant.expenses}
+              <span className="px-4 lg:text-lg w-full font-bold ">
+                {participant.expenses ? `R$ ${participant.expenses}` : "R$ 0"}
               </span>
             </div>
           </div>

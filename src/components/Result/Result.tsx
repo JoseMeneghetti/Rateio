@@ -17,9 +17,8 @@ export default function Result({
   total,
   listOfParticipants,
   findHowManyPayWithoutDiferences,
-  listForResult
+  listForResult,
 }: Props) {
-
   if (
     !listForResult ||
     !listOfParticipants ||
@@ -71,7 +70,7 @@ export default function Result({
                     className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg"
                     key={`${value}-${index}`}
                   >
-                    R${Number(value)?.toFixed(2) ?? 0}
+                    R$ {value ? Number(value)?.toFixed(2) : 0}
                   </td>
                 );
               }
