@@ -20,3 +20,7 @@ export interface Total {
     name: string;
     value: number;
 }
+export interface ListForResult {
+    participant: string;
+    expenses: number;
+}

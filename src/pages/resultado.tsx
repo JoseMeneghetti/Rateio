@@ -3,6 +3,7 @@ import { ListOfParticipants } from ".";
 import { GetServerSideProps } from "next";
 import CardResultado from "../components/Card/CardResultado";
 import Result from "../components/Result/Result";
+import { ListForResult } from "../Types/global";
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
@@ -23,10 +24,8 @@ export default function Resultado({ data }: Props) {
   const [onlyParticipants, setOnlyParticipants] = useState([]);
   const [sumOfPaids, setSumOfPaids] = useState([]);
   const [total, setTotal] = useState([]);
+  const [listForResult, setListForResult] = useState<ListForResult | any>([]);
 
-  console.log(sumOfPaids, " sumOfPaids");
-  console.log(onlyParticipants, " onlyParticipants");
-  
   useEffect(() => {
     if (listOfParticipants.length && participantsShare.length) {
       const findHowManyPayWithoutDiferences = participantsShare.reduce(
@@ -54,6 +53,27 @@ export default function Resultado({ data }: Props) {
         []
       );
 
+      const listForResult = listOfParticipants.reduce(
+        (total: any, participant: ListOfParticipants) => {
+          if (
+            total.find((el: any) => el.participant === participant.participant)
+          ) {
+            total.find(
+              (el: any) => el.participant === participant.participant
+            ).expenses += Number(participant.expenses);
+            return [...total];
+          }
+          return [
+            ...total,
+            {
+              participant: participant.participant,
+              expenses: Number(participant.expenses),
+            },
+          ];
+        },
+        []
+      );
+
       const onlyParticipants = findHowManyPayWithoutDiferences.reduce(
         (total: any, currentElement: any) => {
           return [...total, ...currentElement.participants];
@@ -70,39 +90,37 @@ export default function Resultado({ data }: Props) {
           }
           return [
             ...total,
-            { name: currentElement.name, value: currentElement.value },
+            {
+              name: currentElement.name,
+              value: currentElement.value,
+            },
           ];
         },
         []
       );
 
       const total = sumOfPaids.map((sum: any) => {
-        const findWhoPaid = listOfParticipants.find(
-          (participants: ListOfParticipants) =>
-            participants.participant === sum.name
+        const findWhoPaid = listForResult.find(
+          (participants: ListForResult) => participants.participant === sum.name
         );
 
-        return { name: sum.name, value: findWhoPaid.expenses - sum.value };
+        return {
+          name: sum.name,
+          value: Number(findWhoPaid?.expenses - sum.value).toFixed(2),
+        };
       });
+
+      console.log("sumOfPaids", sumOfPaids);
+      console.log("total", total);
 
       findHowManyPayWithoutDiferences &&
         setFindHowManyPayWithoutDiferences(findHowManyPayWithoutDiferences);
       onlyParticipants && setOnlyParticipants(onlyParticipants);
       sumOfPaids && setSumOfPaids(sumOfPaids);
       total && setTotal(total);
-
-      console.log(
-        "findHowManyPayWithoutDiferences",
-        findHowManyPayWithoutDiferences
-      );
-      console.log("onlyParticipants", onlyParticipants);
-      console.log("sumOfPaids", sumOfPaids);
-      console.log("total", total);
+      listForResult && setListForResult(listForResult);
     }
   }, [listOfParticipants, participantsShare]);
-
-  // console.log(listOfParticipants);
-  // console.log(Object.entries(participantsShare));
 
   if (!listOfParticipants || !participantsShare) {
     return <div> Ocorreu um erro...</div>;
@@ -122,6 +140,7 @@ export default function Resultado({ data }: Props) {
           total={total}
           listOfParticipants={listOfParticipants}
           findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
+          listForResult={listForResult}
         />
       </div>
     </div>

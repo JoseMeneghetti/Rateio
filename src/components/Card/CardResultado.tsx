@@ -34,7 +34,7 @@ function CardResultado({
                   {participant.name}
                 </span>
                 <strong className="text-grey-theme capitalize">
-                  R$ {participant.value}
+                  R$ {Number(participant.value).toFixed(2)}
                 </strong>
               </div>
             ))}
@@ -45,7 +45,7 @@ function CardResultado({
                   {findWhoPaid?.participant}
                 </span>
                 <strong className="text-grey-theme capitalize">
-                  R$ {findWhoPaid?.expenses}
+                  R$ {Number(findWhoPaid?.expenses).toFixed(2)}
                 </strong>
               </div>
             </div>

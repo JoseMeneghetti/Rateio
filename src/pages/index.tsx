@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
       <div>
-        <h1 className="text-5xl font-extrabold neon-text text-center">
+        <h1 className="text-5xl font-extrabold text-center text-white">
           De um nome ao seu rateio
         </h1>
       </div>
@@ -61,7 +61,12 @@ export default function Home() {
           )}
         </>
       )}
-      {step3 && <Step3 listOfParticipants={listOfParticipants} nomeRateio={nomeRateio}/>}
+      {step3 && (
+        <Step3
+          listOfParticipants={listOfParticipants}
+          nomeRateio={nomeRateio}
+        />
+      )}
     </div>
   );
 }

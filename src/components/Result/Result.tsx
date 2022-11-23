@@ -1,30 +1,35 @@
 import { useEffect, useState } from "react";
 import { ListOfParticipants } from "../../pages";
-import { FindHowManyPayWithoutDiferences, Total } from "../../Types/global";
+import {
+  FindHowManyPayWithoutDiferences,
+  ListForResult,
+  Total,
+} from "../../Types/global";
 
 interface Props {
   total: Total[];
   listOfParticipants: ListOfParticipants[];
   findHowManyPayWithoutDiferences: FindHowManyPayWithoutDiferences[];
+  listForResult: ListForResult[];
 }
 
 export default function Result({
   total,
   listOfParticipants,
   findHowManyPayWithoutDiferences,
+  listForResult
 }: Props) {
-  // const [expensesNames, setexpensesNames] = useState<string[] | any>([]);
 
-  // useEffect(() => {
-  //   if (findHowManyPayWithoutDiferences) {
-  //     setexpensesNames(
-  //       findHowManyPayWithoutDiferences.map((el) => el.expenseName)
-  //     );
-  //   }
-  // }, [findHowManyPayWithoutDiferences]);
+  if (
+    !listForResult ||
+    !listOfParticipants ||
+    !findHowManyPayWithoutDiferences ||
+    total
+  ) {
+    <div>Loading..</div>;
+  }
 
-  // console.log(expensesNames)
-
+  console.log(listForResult);
   return (
     <table className="bg-cardbg rounded-lg w-full shadow-custom">
       <tr className="rounded-lg">
@@ -40,16 +45,16 @@ export default function Result({
         <th className="text-white">Quanto Gastou</th>
         <th className="text-white">Total</th>
       </tr>
-      {listOfParticipants?.map((participants, index: number) => {
+      {listForResult?.map((participants: ListForResult, index: number) => {
         const totalPerson = total.find(
           (el) => el.name === participants.participant
         );
-        const diferencesPerson = findHowManyPayWithoutDiferences.find((el) =>
-          el.participants.find((el2) => el2.name === participants.participant)
-        );
-        console.log(diferencesPerson);
+
         return (
-          <tr key={`${participants.participant}-${index}`} className="rounded-lg">
+          <tr
+            key={`${participants.participant}-${index}`}
+            className="rounded-lg"
+          >
             <td className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg">
               {participants.participant}
             </td>
@@ -66,14 +71,14 @@ export default function Result({
                     className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg"
                     key={`${value}-${index}`}
                   >
-                    R${value ?? 0}
+                    R${Number(value)?.toFixed(2) ?? 0}
                   </td>
                 );
               }
             )}
 
             <td className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg">
-              R${participants.expenses}
+              R${Number(participants.expenses).toFixed(2)}
             </td>
             <td
               className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg"
@@ -84,8 +89,8 @@ export default function Result({
               }
             >
               {totalPerson && totalPerson?.value > 0
-                ? `Recebe R$ ${totalPerson?.value}`
-                : `Deve R$ ${totalPerson?.value}`}
+                ? `Recebe R$ ${Number(totalPerson?.value).toFixed(2)}`
+                : `Deve R$ ${Number(totalPerson?.value).toFixed(2)}`}
             </td>
           </tr>
         );

@@ -62,8 +62,14 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
     );
 
     setNames(
-      listOfParticipants.map(
-        (participant: ListOfParticipants) => participant.participant
+      listOfParticipants.reduce(
+        (total: any, participant: ListOfParticipants) => {
+          if (total.find((el: any) => el === participant.participant)) {
+            return [...total];
+          }
+          return [...total, participant.participant];
+        },
+        []
       )
     );
   }, [listOfParticipants]);
