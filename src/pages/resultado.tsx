@@ -3,7 +3,15 @@ import { ListOfParticipants } from ".";
 import { GetServerSideProps } from "next";
 import CardResultado from "../components/Card/CardResultado";
 import Result from "../components/Result/Result";
-import { ListForResult } from "../Types/global";
+import {
+  FindHowManyPayWithoutDiferences,
+  ListForResult,
+  OnlyParticipants,
+  SumOfPaids,
+  Total,
+} from "../Types/global";
+import Sugestion from "../components/Result/Sugestion";
+import { Sugestion as SugestionT } from "../Types/global";
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
@@ -75,14 +83,14 @@ export default function Resultado({ data }: Props) {
       );
 
       const onlyParticipants = findHowManyPayWithoutDiferences.reduce(
-        (total: any, currentElement: any) => {
+        (total: any, currentElement: FindHowManyPayWithoutDiferences) => {
           return [...total, ...currentElement.participants];
         },
         []
       );
 
       const sumOfPaids = onlyParticipants.reduce(
-        (total: any, currentElement: any) => {
+        (total: any, currentElement: OnlyParticipants) => {
           if (total.find((el: any) => el.name === currentElement.name)) {
             total.find((el: any) => el.name === currentElement.name).value +=
               currentElement.value;
@@ -99,7 +107,7 @@ export default function Resultado({ data }: Props) {
         []
       );
 
-      const total = sumOfPaids.map((sum: any) => {
+      const total = sumOfPaids.map((sum: SumOfPaids) => {
         const findWhoPaid = listForResult.find(
           (participants: ListForResult) => participants.participant === sum.name
         );
@@ -110,25 +118,22 @@ export default function Resultado({ data }: Props) {
         };
       });
 
-      console.log("sumOfPaids", sumOfPaids);
-      console.log("total", total);
-
       findHowManyPayWithoutDiferences &&
         setFindHowManyPayWithoutDiferences(findHowManyPayWithoutDiferences);
       onlyParticipants && setOnlyParticipants(onlyParticipants);
       sumOfPaids && setSumOfPaids(sumOfPaids);
-      total && setTotal(total);
       listForResult && setListForResult(listForResult);
+      total && setTotal(total);
     }
   }, [listOfParticipants, participantsShare]);
 
   if (!listOfParticipants || !participantsShare) {
     return <div> Ocorreu um erro...</div>;
   }
-
+  console.log(total)
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
-      <h1 className="text-3xl text-white">{nomeRateio}</h1>
+      <h1 className="text-4xl font-bold text-white">{nomeRateio}</h1>
       <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
         <CardResultado
           findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
@@ -142,6 +147,12 @@ export default function Resultado({ data }: Props) {
           findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
           listForResult={listForResult}
         />
+      </div>
+      <h1 className="text-4xl font-bold text-white my-4">
+        Sugestao de Pagamentos
+      </h1>
+      <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
+        <Sugestion total={total} />
       </div>
     </div>
   );

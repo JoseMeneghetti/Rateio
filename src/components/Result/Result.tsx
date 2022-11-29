@@ -23,12 +23,11 @@ export default function Result({
     !listForResult ||
     !listOfParticipants ||
     !findHowManyPayWithoutDiferences ||
-    total
+    !total
   ) {
     <div>Loading..</div>;
   }
 
-  console.log(listForResult);
   return (
     <table className="bg-cardbg rounded-lg w-full shadow-custom">
       <tr className="rounded-lg">
@@ -54,7 +53,7 @@ export default function Result({
             key={`${participants.participant}-${index}`}
             className="rounded-lg"
           >
-            <td className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg">
+            <td className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg capitalize">
               {participants.participant}
             </td>
 
@@ -64,13 +63,12 @@ export default function Result({
                   (diferenceParticipants) =>
                     diferenceParticipants.name === participants.participant
                 )?.value;
-
                 return (
                   <td
                     className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg"
                     key={`${value}-${index}`}
                   >
-                    R$ {value ? Number(value)?.toFixed(2) : 0}
+                    R$ {value ? Number(value)?.toFixed(2) : (0).toFixed(2)}
                   </td>
                 );
               }
