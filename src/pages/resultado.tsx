@@ -46,7 +46,7 @@ export default function Resultado({ data }: Props) {
 
     let bodyContent = JSON.stringify({
       originalURL: `${ref}`,
-      domain: "link.rateio.vercel.app",
+      domain: "5ve5.short.gy",
     });
 
     let reqOptions = {
