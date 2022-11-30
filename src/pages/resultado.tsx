@@ -17,7 +17,6 @@ type Data = {
   listOfParticipants: ListOfParticipants[] | any;
   participantsShare: string[] | any;
   nomeRateio: string;
-  api_key: string;
 };
 
 interface Props {
@@ -43,7 +42,7 @@ export default function Resultado({ data }: Props) {
       "Content-Type": "application/json",
       authorization: process.env.NEXT_PUBLIC_API_SHORT_IO,
     };
-    console.log(headersList)
+    console.log(headersList);
     let bodyContent = JSON.stringify({
       originalURL: `${ref}`,
       domain: "5ve5.short.gy",
