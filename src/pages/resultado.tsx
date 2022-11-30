@@ -27,7 +27,6 @@ export default function Resultado({ data }: Props) {
   const participantsShare: any = data.participantsShare;
   const listOfParticipants = data.listOfParticipants;
   const nomeRateio = data.nomeRateio;
-  const api_key = data.api_key;
 
   const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
     useState([]);
@@ -40,17 +39,18 @@ export default function Resultado({ data }: Props) {
     const ref = window.location.href;
 
     let headersList = {
+      accept: "application/json",
       "Content-Type": "application/json",
-      authorization: api_key,
+      authorization: process.env.NEXT_PUBLIC_API_SHORT_IO,
     };
-
+    console.log(headersList)
     let bodyContent = JSON.stringify({
       originalURL: `${ref}`,
       domain: "5ve5.short.gy",
     });
 
     let reqOptions = {
-      url: "https://api.short.io/links",
+      url: "https://api.short.cm/links/public",
       method: "POST",
       headers: headersList,
       data: bodyContent,
@@ -213,7 +213,6 @@ export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (
     listOfParticipants: JSON.parse(context.query.listOfParticipants as string),
     participantsShare: JSON.parse(context.query.participantsShare as string),
     nomeRateio: context.query.nomeRateio as string,
-    api_key: process.env.API_SHORT_IO as string,
   };
   // Pass data to the page via props
 
