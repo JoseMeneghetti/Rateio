@@ -73,7 +73,6 @@ export default function Step2({
               type="button"
               onClick={() => {
                 if (nameRef?.current?.value !== "") {
-                  console.log(nameRef?.current?.value);
                   setOpenExpenses(true);
                 }
               }}

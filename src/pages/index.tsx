@@ -15,7 +15,6 @@ export default function Home() {
 
   const formRef = useRef<any>(null);
 
-  console.log(listOfParticipants);
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
       <div>
