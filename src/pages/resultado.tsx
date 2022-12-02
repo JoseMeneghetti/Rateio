@@ -33,6 +33,7 @@ export default function Resultado({ data }: Props) {
   const [sumOfPaids, setSumOfPaids] = useState([]);
   const [total, setTotal] = useState([]);
   const [listForResult, setListForResult] = useState<ListForResult | any>([]);
+  const [sugestionList, setSugestionList] = useState<any>([]);
   const [shortURL, setShortURL] = useState("");
   async function GerarLink() {
     const ref = window.location.href;
@@ -143,12 +144,92 @@ export default function Resultado({ data }: Props) {
         };
       });
 
+      const total2 = structuredClone(total);
+
+      const sugestion = total2.reduce(
+        (totalSugestion: any, currentElement: any) => {
+          if (currentElement.value >= 0) {
+            return [
+              ...totalSugestion,
+              {
+                name: currentElement.name,
+                value: currentElement.value,
+              },
+            ];
+          }
+
+          totalSugestion.forEach((sugestionItem: any) => {
+            if (sugestionItem.value === 0 || currentElement.value === 0) {
+              return;
+            }
+
+            const sumItems =
+              Number(sugestionItem.value) + Number(currentElement.value);
+
+            if (sumItems >= 0) {
+              sugestionItem.value = sumItems;
+
+              if (!sugestionItem.receives) {
+                sugestionItem.receives = [];
+              }
+
+              sugestionItem.receives.push({
+                receiveFrom: currentElement.name,
+                receiveValue: currentElement.value,
+              });
+
+              if (!currentElement.pays) {
+                currentElement.pays = [];
+              }
+              currentElement.pays.push({
+                pays: sugestionItem.name,
+                payValue: currentElement.value,
+              });
+
+              currentElement.value = 0;
+            } else {
+              if (!currentElement.pays) {
+                currentElement.pays = [];
+              }
+              currentElement.pays.push({
+                pays: sugestionItem.name,
+                payValue: sugestionItem.value,
+              });
+
+              if (!sugestionItem.receives) {
+                sugestionItem.receives = [];
+              }
+              sugestionItem.receives.push({
+                receiveFrom: currentElement.name,
+                receiveValue: sugestionItem.value,
+              });
+
+              sugestionItem.value = 0;
+              currentElement.value = sumItems;
+            }
+          });
+
+          if (
+            !totalSugestion.find((el: Total) => el.name === currentElement.name)
+          ) {
+            return [...totalSugestion, currentElement];
+          }
+
+          return [...totalSugestion];
+        },
+        []
+      );
+
+      console.log(total)
+      console.log(sugestion)
+
       findHowManyPayWithoutDiferences &&
         setFindHowManyPayWithoutDiferences(findHowManyPayWithoutDiferences);
       onlyParticipants && setOnlyParticipants(onlyParticipants);
       sumOfPaids && setSumOfPaids(sumOfPaids);
       listForResult && setListForResult(listForResult);
       total && setTotal(total);
+      sugestion && setSugestionList(sugestion);
     }
   }, [listOfParticipants, participantsShare]);
 
@@ -177,7 +258,7 @@ export default function Resultado({ data }: Props) {
         Sugestao de Pagamentos
       </h1>
       <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
-        <Sugestion total={total} />
+        <Sugestion sugestion={sugestionList} />
       </div>
       <div className="my-10 h-fit w-full flex flex-wrap flex-col gap-10 justify-center items-center">
         <button
