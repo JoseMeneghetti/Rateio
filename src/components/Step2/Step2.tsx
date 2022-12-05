@@ -157,7 +157,7 @@ export default function Step2({
       <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-row flex-wrap justify-between items-center">
         {listOfParticipants.map((participant: ListOfParticipants) => (
           <div
-            className="bg-yellow-500 rounded-xl flex flex-row justify-between p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full"
+            className="bg-yellow-500 rounded-xl flex flex-row justify-center p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full"
             key={participant.participant}
           >
             <div className="flex items-center w-1/3 flex-col justify-center">
