@@ -1,4 +1,6 @@
-import { FormEvent, useRef, useState } from "react";
+import { GetServerSideProps } from "next";
+import { ArrowFatLineRight } from "phosphor-react";
+import { useEffect, useRef, useState } from "react";
 import Step2 from "../components/Step2/Step2";
 import Step3 from "../components/Step3/Step3";
 
@@ -7,7 +9,17 @@ export interface ListOfParticipants {
   expenses: number;
   description: string;
 }
-export default function Home() {
+
+interface Props {
+  data: Data;
+}
+
+type Data = {
+  listOfParticipantsByEdition: ListOfParticipants[] | any;
+  nomeRateioByEdition: string | any;
+};
+
+export default function Home({ data }: Props) {
   const [nomeRateio, setnomeRateio] = useState("");
   const [listOfParticipants, setListOfParticipants] = useState<any>([]);
   const [step2, setStep2] = useState(false);
@@ -15,10 +27,18 @@ export default function Home() {
 
   const formRef = useRef<any>(null);
 
+  useEffect(() => {
+    if (data.listOfParticipantsByEdition && data.nomeRateioByEdition) {
+      setListOfParticipants(data.listOfParticipantsByEdition);
+      setnomeRateio(data.nomeRateioByEdition);
+      setStep2(true);
+    }
+  }, []);
+
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
       <div>
-        <h1 className="text-5xl font-extrabold text-center text-white">
+        <h1 className="text-5xl text-center text-white font-abel">
           De um nome ao seu rateio
         </h1>
       </div>
@@ -50,13 +70,14 @@ export default function Home() {
           />
           {listOfParticipants.length > 1 && (
             <button
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+              className="px-4 py-2 my-10 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit flex items-center gap-3"
               onClick={() => {
                 setStep3(true);
                 setStep2(false);
               }}
             >
-              Continue
+              Avançar
+              <ArrowFatLineRight size={24} weight="bold" />
             </button>
           )}
         </>
@@ -70,3 +91,23 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (
+  context
+) => {
+  // Fetch data from external API
+
+  const data = {
+    listOfParticipantsByEdition: JSON.parse(
+      (context.query.listOfParticipants as string) ?? null
+    ),
+    nomeRateioByEdition: (context.query.nomeRateio as string) ?? null,
+  };
+  // Pass data to the page via props
+
+  return {
+    props: {
+      data,
+    },
+  };
+};

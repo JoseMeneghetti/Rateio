@@ -1,5 +1,5 @@
 import React, { FormEvent, useRef, useState } from "react";
-import { PencilSimple, PlusCircle, Trash } from "phosphor-react";
+import { Minus, PencilSimple, PlusCircle, Trash } from "phosphor-react";
 import { ListOfParticipants } from "../../pages";
 import ModalEdit from "./ModalEdit/ModalEdit";
 
@@ -154,38 +154,48 @@ export default function Step2({
         </form>
       </div>
 
-      <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-col">
+      <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-row flex-wrap justify-between items-center">
         {listOfParticipants.map((participant: ListOfParticipants) => (
           <div
-            className="bg-yellow-500 rounded-xl w-full flex flex-row justify-between p-3"
+            className="bg-yellow-500 rounded-xl flex flex-row justify-between p-3 max-w-[390px] w-[390px] min-h-[116px]"
             key={participant.participant}
           >
-            <div className="flex items-center">
-              <label>Nome:</label>
-              <span className="px-4 lg:text-lg w-full font-bold ">
+            <div className="flex items-center w-1/3 flex-col justify-center">
+              <p className="w-12 h-12 flex border-2 border-black rounded-full items-center justify-center text-2xl">
+                {participant.participant &&
+                  participant.participant[0]?.toUpperCase()}
+              </p>
+              <span className="px-1 lg:text-lg w-full font-bold text-center break-words">
                 {participant.participant}
               </span>
             </div>
-            <div className="flex items-center">
-              {participant.description ? (
+
+            <div className="flex flex-col gap-4 w-2/3 justify-center">
+              <div className="flex items-center">
                 <>
-                  <label>Gastou em:</label>
-                  <span className="px-4 lg:text-lg w-full font-bold ">
-                    {participant.description}
+                  <label className="w-full">Gastou em:</label>
+                  <span className="px-1 lg:text-lg w-full font-bold break-words">
+                    {participant.description !== "" ? (
+                      participant.description
+                    ) : (
+                      <Minus
+                        size={24}
+                        color="#0d0c0c"
+                        weight="bold"
+                        className="text-center"
+                      />
+                    )}
                   </span>
                 </>
-              ) : (
-                <span className="px-4 lg:text-lg w-full font-bold text-center">
-                  Nao gastou em nada
+              </div>
+              <div className="flex items-center">
+                <label className="w-full">Quanto Gastou:</label>
+                <span className="px-1 lg:text-lg w-full font-bold break-words">
+                  {participant.expenses ? `R$ ${participant.expenses}` : "R$ 0"}
                 </span>
-              )}
+              </div>
             </div>
-            <div className="flex items-center">
-              <label>Quanto Gastou:</label>
-              <span className="px-4 lg:text-lg w-full font-bold ">
-                {participant.expenses ? `R$ ${participant.expenses}` : "R$ 0"}
-              </span>
-            </div>
+
             <div className="flex items-center justify-center gap-2">
               <PencilSimple
                 size={24}

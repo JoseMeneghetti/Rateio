@@ -23,7 +23,7 @@ export default function ModalEdit({
 
   const nameRef = useRef<any>(null);
   if (!editablePerson) {
-    return <div>Loading...</div>;
+    return <></>;
   }
 
   function handleSubmit(event: FormEvent) {

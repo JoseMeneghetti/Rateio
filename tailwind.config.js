@@ -25,6 +25,9 @@ module.exports = {
           theme: "#C4C4CC",
         },
       },
+      fontFamily: {
+        abel: ["Abel", "sans-serif"],
+      },
     },
   },
   plugins: [],

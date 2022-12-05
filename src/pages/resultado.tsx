@@ -12,6 +12,7 @@ import {
 } from "../Types/global";
 import Sugestion from "../components/Result/Sugestion";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
@@ -35,6 +36,9 @@ export default function Resultado({ data }: Props) {
   const [listForResult, setListForResult] = useState<ListForResult | any>([]);
   const [sugestionList, setSugestionList] = useState<any>([]);
   const [shortURL, setShortURL] = useState("");
+
+  const router = useRouter();
+
   async function GerarLink() {
     const ref = window.location.href;
 
@@ -43,7 +47,7 @@ export default function Resultado({ data }: Props) {
       "Content-Type": "application/json",
       authorization: process.env.NEXT_PUBLIC_API_SHORT_IO,
     };
-    console.log(headersList);
+
     let bodyContent = JSON.stringify({
       originalURL: `${ref}`,
       domain: "5ve5.short.gy",
@@ -58,6 +62,16 @@ export default function Resultado({ data }: Props) {
 
     let response = await axios.request(reqOptions);
     setShortURL(response.data.shortURL);
+  }
+
+  function handleEditRateio() {
+    router.push({
+      pathname: "/",
+      query: {
+        listOfParticipants: JSON.stringify(listOfParticipants),
+        nomeRateio: nomeRateio,
+      },
+    });
   }
 
   useEffect(() => {
@@ -264,12 +278,6 @@ export default function Resultado({ data }: Props) {
         <Sugestion sugestion={sugestionList} />
       </div>
       <div className="my-10 h-fit w-full flex flex-wrap flex-col gap-10 justify-center items-center">
-        <button
-          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
-          onClick={() => GerarLink()}
-        >
-          Compartilhar
-        </button>
         {shortURL && (
           <div className="flex flex-row items-center justify-center gap-4">
             <label className="font-bold text-white my-4">
@@ -282,6 +290,18 @@ export default function Resultado({ data }: Props) {
             ></input>
           </div>
         )}
+        <button
+          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+          onClick={() => handleEditRateio()}
+        >
+          Editar
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+          onClick={() => GerarLink()}
+        >
+          Compartilhar
+        </button>
       </div>
     </div>
   );
