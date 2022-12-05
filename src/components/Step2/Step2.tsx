@@ -165,7 +165,7 @@ export default function Step2({
                 {participant.participant &&
                   participant.participant[0]?.toUpperCase()}
               </p>
-              <span className="px-1 lg:text-lg w-full font-bold text-center break-words">
+              <span className="px-1 lg:text-lg w-full font-bold text-center break-words capitalize">
                 {participant.participant}
               </span>
             </div>
