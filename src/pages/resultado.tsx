@@ -133,16 +133,19 @@ export default function Resultado({ data }: Props) {
         []
       );
 
-      const total = sumOfPaids.map((sum: SumOfPaids) => {
-        const findWhoPaid = listForResult.find(
-          (participants: ListForResult) => participants.participant === sum.name
-        );
+      const total = sumOfPaids
+        .map((sum: SumOfPaids) => {
+          const findWhoPaid = listForResult.find(
+            (participants: ListForResult) =>
+              participants.participant === sum.name
+          );
 
-        return {
-          name: sum.name,
-          value: Number(findWhoPaid?.expenses - sum.value).toFixed(2),
-        };
-      });
+          return {
+            name: sum.name,
+            value: Number(findWhoPaid?.expenses - sum.value).toFixed(2),
+          };
+        })
+        .sort((a: Total, b: Total) => b.value - a.value);
 
       const total2 = structuredClone(total);
 
@@ -157,7 +160,7 @@ export default function Resultado({ data }: Props) {
               },
             ];
           }
-
+          debugger;
           totalSugestion.forEach((sugestionItem: any) => {
             if (sugestionItem.value === 0 || currentElement.value === 0) {
               return;
@@ -220,8 +223,8 @@ export default function Resultado({ data }: Props) {
         []
       );
 
-      console.log(total)
-      console.log(sugestion)
+      console.log(total);
+      console.log(sugestion);
 
       findHowManyPayWithoutDiferences &&
         setFindHowManyPayWithoutDiferences(findHowManyPayWithoutDiferences);

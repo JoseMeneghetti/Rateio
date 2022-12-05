@@ -1,6 +1,7 @@
 import React, { FormEvent, useRef, useState } from "react";
-import { PlusCircle } from "phosphor-react";
+import { PencilSimple, PlusCircle, Trash } from "phosphor-react";
 import { ListOfParticipants } from "../../pages";
+import ModalEdit from "./ModalEdit/ModalEdit";
 
 interface Props {
   formRef: any;
@@ -14,6 +15,9 @@ export default function Step2({
 }: Props) {
   const [openExpenses, setOpenExpenses] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(true);
+  const [editablePerson, setEditablePerson] = useState<any>(null);
+
   const nameRef = useRef<any>(null);
 
   function addParticipant(event: FormEvent) {
@@ -42,6 +46,18 @@ export default function Step2({
 
     setOpenEdit(false);
     setOpenExpenses(false);
+  }
+
+  function handleEdit(params: ListOfParticipants) {
+    setIsOpenModal(true);
+    setEditablePerson(params);
+  }
+
+  function handleDelete(params: ListOfParticipants) {
+    const newData = listOfParticipants.filter(
+      (el: ListOfParticipants) => el.participant !== params.participant
+    );
+    setListOfParticipants([...newData]);
   }
 
   return (
@@ -141,7 +157,7 @@ export default function Step2({
       <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-col">
         {listOfParticipants.map((participant: ListOfParticipants) => (
           <div
-            className="bg-yellow-500 rounded-xl w-full flex flex-row justify-between p-2"
+            className="bg-yellow-500 rounded-xl w-full flex flex-row justify-between p-3"
             key={participant.participant}
           >
             <div className="flex items-center">
@@ -170,9 +186,28 @@ export default function Step2({
                 {participant.expenses ? `R$ ${participant.expenses}` : "R$ 0"}
               </span>
             </div>
+            <div className="flex items-center justify-center gap-2">
+              <PencilSimple
+                size={24}
+                className="cursor-pointer"
+                onClick={() => handleEdit(participant)}
+              />
+              <Trash
+                size={24}
+                className="cursor-pointer"
+                onClick={() => handleDelete(participant)}
+              />
+            </div>
           </div>
         ))}
       </div>
+      <ModalEdit
+        isOpenModal={isOpenModal}
+        setIsOpenModal={setIsOpenModal}
+        editablePerson={editablePerson}
+        setListOfParticipants={setListOfParticipants}
+        listOfParticipants={listOfParticipants}
+      />
     </>
   );
 }
