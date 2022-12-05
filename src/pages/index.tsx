@@ -38,7 +38,7 @@ export default function Home({ data }: Props) {
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
       <div>
-        <h1 className="text-5xl text-center text-white font-abel">
+        <h1 className="text-5xl text-center text-white">
           De um nome ao seu rateio
         </h1>
       </div>
