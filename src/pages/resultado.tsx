@@ -13,6 +13,7 @@ import {
 import Sugestion from "../components/Result/Sugestion";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { PencilSimple, Share } from "phosphor-react";
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
@@ -272,7 +273,7 @@ export default function Resultado({ data }: Props) {
         />
       </div>
       <h1 className="text-4xl font-bold text-white my-4">
-        Sugestao de Pagamentos
+        Sugestão de Pagamentos
       </h1>
       <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
         <Sugestion sugestion={sugestionList} />
@@ -291,16 +292,18 @@ export default function Resultado({ data }: Props) {
           </div>
         )}
         <button
-          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
           onClick={() => handleEditRateio()}
         >
           Editar
+          <PencilSimple size={24} weight="bold" />
         </button>
         <button
-          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
           onClick={() => GerarLink()}
         >
           Compartilhar
+          <Share size={24} weight="bold" />
         </button>
       </div>
     </div>
