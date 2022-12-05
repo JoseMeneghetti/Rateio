@@ -160,7 +160,7 @@ export default function Resultado({ data }: Props) {
               },
             ];
           }
-          debugger;
+
           totalSugestion.forEach((sugestionItem: any) => {
             if (sugestionItem.value === 0 || currentElement.value === 0) {
               return;
