@@ -42,22 +42,47 @@ export default function Home({ data }: Props) {
   return (
     <>
       <Head>
+        {/* <!-- HTML Meta Tags --> */}
         <title>Rateio</title>
         <meta
           name="description"
-          content="Digital split do seu role!"
-          key="desc"
+          content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
         />
-        <meta property="og:title" content="Rateio" />
-        <meta property="og:site_name" content="rateio.vercel.app" />
-        <meta property="og:url" content="rateio.vercel.app" />
-        <meta property="og:description" content="Digital split do seu role!" />
+
+        {/* <!-- Google / Search Engine Tags --/> */}
+        <meta itemProp="name" content="Rateio" />
+        <meta
+          itemProp="description"
+          content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
+        />
+        <meta itemProp="image" content="http://rateio.vercel.app/Rateio.png" />
+
+        {/* <!-- Facebook Meta Tags --/> */}
+        <meta property="og:url" content="https://rateio.vercel.app" />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content="Rateio" />
+        <meta
+          property="og:description"
+          content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
+        />
         <meta
           property="og:image"
-          content="https://rateio.vercel.app/Rateio.png"
+          content="http://rateio.vercel.app/Rateio.png"
+        />
+
+        {/* <!-- Twitter Meta Tags --/> */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Rateio" />
+        <meta
+          name="twitter:description"
+          content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
+        />
+        <meta
+          name="twitter:image"
+          content="http://rateio.vercel.app/Rateio.png"
         />
       </Head>
+      
       <div className="max-w-[800px] mx-auto flex flex-col items-center">
         <div>
           <h1 className="text-5xl text-center text-white">
