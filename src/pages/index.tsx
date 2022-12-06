@@ -54,6 +54,11 @@ export default function Home({ data }: Props) {
           content="Rateio digital para o seu role"
         />
         <meta property="og:image" content="/Rateio.png" />
+        <meta property="og:image:secure_url" content="/Rateio.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="300" />
+        <meta property="og:image:alt" content="rateio.verce.app logo image" />
       </Head>
       <div className="max-w-[800px] mx-auto flex flex-col items-center">
         <div>
