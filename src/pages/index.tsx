@@ -55,7 +55,7 @@ export default function Home({ data }: Props) {
           itemProp="description"
           content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
         />
-        <meta itemProp="image" content="/rateio_256.png" />
+        <meta itemProp="image" content="/Rateio.png" />
 
         {/* <!-- Facebook Meta Tags --/> */}
         <meta property="og:url" content="https://rateio.vercel.app" />
@@ -65,7 +65,7 @@ export default function Home({ data }: Props) {
           property="og:description"
           content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
         />
-        <meta property="og:image" itemProp="image" content="/rateio_256.png" />
+        <meta property="og:image" itemProp="image" content="/Rateio.png" />
 
         {/* <!-- Twitter Meta Tags --/> */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -74,8 +74,8 @@ export default function Home({ data }: Props) {
           name="twitter:description"
           content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
         />
-        <meta name="twitter:image" content="/rateio_256.png" />
-        
+        <meta name="twitter:image" content="/Rateio.png" />
+
         {/* <!-- Twitter Meta Tags --/> */}
         <meta name="whatsapp:card" content="summary_large_image" />
         <meta name="whatsapp:title" content="Rateio" />
@@ -83,7 +83,7 @@ export default function Home({ data }: Props) {
           name="whatsapp:description"
           content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
         />
-        <meta name="whatsapp:image" content="/rateio_256.png" />
+        <meta name="whatsapp:image" content="/Rateio.png" />
       </Head>
 
       <div className="max-w-[800px] mx-auto flex flex-col items-center">
