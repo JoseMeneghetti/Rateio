@@ -55,7 +55,10 @@ export default function Home({ data }: Props) {
           itemProp="description"
           content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
         />
-        <meta itemProp="image" content="http://rateio.vercel.app/Rateio.png" />
+        <meta
+          itemProp="image"
+          content="http://rateio.vercel.app/rateio_256.png"
+        />
 
         {/* <!-- Facebook Meta Tags --/> */}
         <meta property="og:url" content="https://rateio.vercel.app" />
@@ -68,7 +71,7 @@ export default function Home({ data }: Props) {
         <meta
           property="og:image"
           itemProp="image"
-          content="http://rateio.vercel.app/Rateio.png"
+          content="http://rateio.vercel.app/rateio_256.png"
         />
 
         {/* <!-- Twitter Meta Tags --/> */}
@@ -80,7 +83,7 @@ export default function Home({ data }: Props) {
         />
         <meta
           name="twitter:image"
-          content="http://rateio.vercel.app/Rateio.png"
+          content="http://rateio.vercel.app/rateio_256.png"
         />
         {/* <!-- Twitter Meta Tags --/> */}
         <meta name="whatsapp:card" content="summary_large_image" />
@@ -91,7 +94,7 @@ export default function Home({ data }: Props) {
         />
         <meta
           name="whatsapp:image"
-          content="http://rateio.vercel.app/Rateio.png"
+          content="http://rateio.vercel.app/rateio_256.png"
         />
       </Head>
 
