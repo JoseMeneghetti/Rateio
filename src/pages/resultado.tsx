@@ -256,7 +256,7 @@ export default function Resultado({ data }: Props) {
   }
 
   return (
-    <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
+    <div className="max-w-[800px] mx-auto flex flex-col items-center">
       <h1 className="text-4xl font-bold text-white">{nomeRateio}</h1>
       <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
         <CardResultado

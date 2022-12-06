@@ -45,11 +45,12 @@ export default function Home({ data }: Props) {
       <div className="my-10 bg-yellow-500 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
         <div className="flex justify-start flex-row items-center h-full gap-4">
           <div className="flex flex-col w-full">
-            {step2 && (
-              <span className="text-center lg:text-xl mb-2">
-                Nome do Seu Rateio
-              </span>
-            )}
+            {step2 ||
+              (step3 && (
+                <span className="text-center lg:text-xl mb-2">
+                  Nome do Seu Rateio
+                </span>
+              ))}
             <input
               id="name"
               name="name"
@@ -61,14 +62,15 @@ export default function Home({ data }: Props) {
             ></input>
           </div>
 
-          {!step2 && (
-            <button
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg font-jack lg:text-2xl h-fit"
-              onClick={() => setStep2(true)}
-            >
-              Continuar
-            </button>
-          )}
+          {!step2 ||
+            (!step3 && (
+              <button
+                className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg font-jack lg:text-2xl h-fit"
+                onClick={() => setStep2(true)}
+              >
+                Continuar
+              </button>
+            ))}
         </div>
       </div>
       {step2 && (

@@ -204,7 +204,7 @@ export default function Step2({
               </div>
             </div>
 
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-5">
               <PencilSimple
                 size={24}
                 className="cursor-pointer"
