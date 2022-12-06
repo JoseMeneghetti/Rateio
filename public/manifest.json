@@ -1,12 +1,7 @@
 {
-  "theme_color": "#000000",
-  "background_color": "#000000",
-  "display": "standalone",
-  "scope": "https://rateio.vercel.app",
-  "start_url": "https://rateio.vercel.app",
   "name": "Rateio",
   "short_name": "Rateio",
-  "description": "Digital split do seu role",
+
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -28,5 +23,11 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "description": "Digital split do seu role",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
 }
