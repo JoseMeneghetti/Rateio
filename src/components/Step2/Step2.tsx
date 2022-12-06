@@ -69,22 +69,26 @@ export default function Step2({
           ref={formRef}
         >
           <div
-            className="flex flex-row justify-start items-center w-full gap-4"
+            className="flex flex-row justify-start items-end w-full gap-4"
             style={
               !openExpenses && !openEdit
                 ? { display: "flex" }
                 : { display: "none" }
             }
           >
-            <input
-              id="participant"
-              name="participant"
-              placeholder="Nome"
-              className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full"
-              required
-              ref={nameRef}
-            ></input>
-
+            <div className="flex flex-col w-full">
+              <span className="text-center lg:text-xl mb-2">
+                Adicione um novo participante
+              </span>
+              <input
+                id="participant"
+                name="participant"
+                placeholder="Nome"
+                className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full"
+                required
+                ref={nameRef}
+              ></input>
+            </div>
             <button
               type="button"
               onClick={() => {
@@ -92,34 +96,38 @@ export default function Step2({
                   setOpenExpenses(true);
                 }
               }}
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-2xl h-fit"
             >
               <PlusCircle />
             </button>
           </div>
 
           <div
-            className="flex flex-row justify-start items-center w-full gap-4"
+            className="flex flex-col justify-start items-center w-full gap-4"
             style={
               openExpenses && !openEdit
                 ? { display: "flex" }
                 : { display: "none" }
             }
           >
-            <span>Gastou com algo?</span>
-            <button
-              type="button"
-              onClick={() => setOpenEdit(true)}
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
-            >
-              Sim
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
-            >
-              Nao
-            </button>
+            <span className="text-center lg:text-xl mb-2">
+              Gastou com algo?
+            </span>
+            <div className="flex flex-row gap-5">
+              <button
+                type="button"
+                onClick={() => setOpenEdit(true)}
+                className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+              >
+                Sim
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+              >
+                Nao
+              </button>
+            </div>
           </div>
 
           <div
@@ -154,7 +162,7 @@ export default function Step2({
         </form>
       </div>
 
-      <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-row flex-wrap justify-between items-center">
+      <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-row flex-wrap justify-center items-center">
         {listOfParticipants.map((participant: ListOfParticipants) => (
           <div
             className="bg-yellow-500 rounded-xl flex flex-row justify-center p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full"

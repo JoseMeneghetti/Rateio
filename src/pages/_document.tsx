@@ -1,4 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Document() {
   return (
@@ -14,6 +16,19 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <div className="flex justify-center items-center w-full">
+          <Link href={"/"}>
+            <Image
+              src={"/Rateio.png"}
+              width={350}
+              height={350}
+              sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+              alt="Logo"
+            />
+          </Link>
+        </div>
       </Head>
       <body className="bg-rateio">
         <Main />

@@ -36,7 +36,7 @@ export default function Home({ data }: Props) {
   }, []);
 
   return (
-    <div className="max-w-[800px] mx-auto flex flex-col items-center pt-10">
+    <div className="max-w-[800px] mx-auto flex flex-col items-center">
       <div>
         <h1 className="text-5xl text-center text-white">
           De um nome ao seu rateio
@@ -44,21 +44,31 @@ export default function Home({ data }: Props) {
       </div>
       <div className="my-10 bg-yellow-500 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
         <div className="flex justify-start flex-row items-center h-full gap-4">
-          <input
-            id="name"
-            name="name"
-            placeholder="Nome do rateio"
-            className="bg-gray-100 py-2 px-4 rounded lg:text-2xl placeholder:text-black w-full font-bold"
-            value={nomeRateio}
-            onChange={(e) => setnomeRateio(e.target.value)}
-            required
-          ></input>
-          <button
-            className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg font-jack lg:text-2xl h-fit"
-            onClick={() => setStep2(true)}
-          >
-            Continuar
-          </button>
+          <div className="flex flex-col w-full">
+            {step2 && (
+              <span className="text-center lg:text-xl mb-2">
+                Nome do Seu Rateio
+              </span>
+            )}
+            <input
+              id="name"
+              name="name"
+              placeholder="Nome do rateio"
+              className="bg-gray-100 py-2 px-4 rounded lg:text-2xl placeholder:text-black w-full font-bold"
+              value={nomeRateio}
+              onChange={(e) => setnomeRateio(e.target.value)}
+              required
+            ></input>
+          </div>
+
+          {!step2 && (
+            <button
+              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg font-jack lg:text-2xl h-fit"
+              onClick={() => setStep2(true)}
+            >
+              Continuar
+            </button>
+          )}
         </div>
       </div>
       {step2 && (

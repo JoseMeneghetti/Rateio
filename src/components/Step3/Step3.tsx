@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { ListOfParticipants } from "../../pages";
 import { useRouter } from "next/router";
 import { Switch } from "@headlessui/react";
+import SwitchButton from "./SwitchButton/SwitchButton";
 
 interface Props {
   listOfParticipants: any;
@@ -94,13 +95,7 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
                 </strong>
                 {names.map((name: string) => (
                   <div className="flex items-center" key={name}>
-                    <input
-                      id={`${expenseName}-${name}`}
-                      name={`${expenseName}-${name}`}
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300"
-                      defaultChecked
-                    />
+                    <SwitchButton name={`${expenseName}-${name}`} />
                     <label className="ml-3 min-w-0 flex-1">{name}</label>
                   </div>
                 ))}
