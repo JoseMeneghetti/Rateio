@@ -45,12 +45,12 @@ export default function Home({ data }: Props) {
         <title>Rateio</title>
         <meta
           name="description"
-          content="Rateio digital para o seu role"
+          content="Digital split do seu role!"
           key="desc"
         />
         <meta property="og:title" content="Rateio" />
         <meta property="og:site_name" content="rateio.vercel.app" />
-        <meta property="og:url" content="https://rateio.vercel.app" />
+        <meta property="og:url" content="rateio.vercel.app" />
         <meta property="og:description" content="Digital split do seu role!" />
         <meta property="og:type" content="website" />
         <meta
