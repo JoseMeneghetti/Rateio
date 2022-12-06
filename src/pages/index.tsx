@@ -67,6 +67,7 @@ export default function Home({ data }: Props) {
         />
         <meta
           property="og:image"
+          itemProp="image"
           content="http://rateio.vercel.app/Rateio.png"
         />
 
@@ -81,8 +82,19 @@ export default function Home({ data }: Props) {
           name="twitter:image"
           content="http://rateio.vercel.app/Rateio.png"
         />
+        {/* <!-- Twitter Meta Tags --/> */}
+        <meta name="whatsapp:card" content="summary_large_image" />
+        <meta name="whatsapp:title" content="Rateio" />
+        <meta
+          name="whatsapp:description"
+          content="Faça aqui o digital split do seu role! Criei e compartilhe seu rateio."
+        />
+        <meta
+          name="whatsapp:image"
+          content="http://rateio.vercel.app/Rateio.png"
+        />
       </Head>
-      
+
       <div className="max-w-[800px] mx-auto flex flex-col items-center">
         <div>
           <h1 className="text-5xl text-center text-white">
