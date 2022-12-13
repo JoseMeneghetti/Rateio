@@ -8,7 +8,6 @@ interface Props {
   icon: string;
 }
 export default function PopoverFoods({ setIcon, icon }: Props) {
-
   return (
     <Popover className="relative">
       {!icon ? (
@@ -22,10 +21,10 @@ export default function PopoverFoods({ setIcon, icon }: Props) {
         </Popover.Button>
       )}
 
-      <Popover.Panel className="absolute z-10 right-0 bottom-9">
+      <Popover.Panel className="absolute z-10 md:right-0 -translate-x-[6.5rem] md:-translate-x-0 bottom-9 w-[300px] md:w-[500px]">
         {({ close }) => (
-          <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 w-[500px] shadow-custom ">
-            <div className="relative bg-theme-5 p-7 flex flex-wrap gap-2 justify-center">
+          <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 shadow-custom w-[300px] md:w-[500px]  ">
+            <div className="relative bg-theme-5 p-7 flex flex-wrap gap-2 justify-center w-full">
               {mockIcons.map((iconName) => (
                 <div key={iconName} className="">
                   <div
