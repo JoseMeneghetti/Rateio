@@ -15,7 +15,7 @@ export default function SwitchButton({ name }: Props) {
         checked={enabled}
         onChange={setEnabled}
         className={`${
-          enabled ? "bg-blue-900" : "bg-yellow-600"
+          enabled ? "bg-cardbg" : "bg-theme-2"
         } relative inline-flex h-6 w-11 items-center rounded-full`}
       >
         <span className="sr-only">Enable notifications</span>

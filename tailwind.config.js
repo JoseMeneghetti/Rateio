@@ -13,16 +13,39 @@ module.exports = {
         yellow: {
           theme: "#F7DD43",
         },
+        theme: {
+          1: "#D2D7D9",
+          2: "#848B8C",
+          3: "#B8BEBF",
+          4: "#F0F2F2",
+          5: "#595959",
+          6: "#363E40",
+        },
       },
       borderColor: {
         yellow: {
           theme: "#F7DD43",
         },
         cardbg: "#202024",
+        theme: {
+          1: "#D2D7D9",
+          2: "#848B8C",
+          3: "#B8BEBF",
+          4: "#F0F2F2",
+          5: "#595959",
+          6: "#363E40",
+        },
       },
       textColor: {
         grey: {
           theme: "#C4C4CC",
+        },
+        theme: {
+          1: "#D2D7D9",
+          2: "#848B8C",
+          3: "#B8BEBF",
+          4: "#F0F2F2",
+          5: "#595959",
         },
       },
       fontFamily: {

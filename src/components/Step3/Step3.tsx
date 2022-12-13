@@ -82,21 +82,21 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
       ref={participationRef}
       onSubmit={setParticipation}
     >
-      <div className="flex w-full bg-yellow-500 rounded p-2 m-2 flex-col">
-        <span className="flex justify-center text-2xl mb-4">
+      <div className="flex w-full bg-theme-5 rounded p-2 m-2 flex-col">
+        <span className="flex justify-center text-2xl mb-4 text-theme-4">
           Quem participou?
         </span>
         <div className="flex flex-row justify-center gap-5 flex-wrap">
           {typesOfExpenses.map((expenseName: string) => (
             <div key={expenseName}>
               <div className="shadow-custom py-2 px-5 rounded m-2">
-                <strong className="capitalize mb-1 block text-center">
+                <strong className="capitalize mb-1 block text-center text-theme-4">
                   {expenseName}
                 </strong>
                 {names.map((name: string) => (
                   <div className="flex items-center" key={name}>
                     <SwitchButton name={`${expenseName}-${name}`} />
-                    <label className="ml-3 min-w-0 flex-1">{name}</label>
+                    <label className="ml-3 min-w-0 flex-1 text-theme-4 capitalize">{name}</label>
                   </div>
                 ))}
               </div>
@@ -107,7 +107,7 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
       <div className="flex justify-center w-full">
         <button
           type="submit"
-          className="mt-4 px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+          className="mt-4 px-4 py-2 bg-theme-2 hover:bg-theme-3 text-theme-6 rounded-lg text-3xl h-fit"
         >
           Calcular
         </button>

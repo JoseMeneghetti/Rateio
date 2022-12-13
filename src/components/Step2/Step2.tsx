@@ -62,7 +62,7 @@ export default function Step2({
 
   return (
     <>
-      <div className="my-10 bg-yellow-500 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
+      <div className="my-10 bg-theme-5 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
         <form
           className="flex justify-start flex-col items-center"
           onSubmit={addParticipant}
@@ -77,14 +77,14 @@ export default function Step2({
             }
           >
             <div className="flex flex-col w-full">
-              <span className="text-center lg:text-xl mb-2">
+              <span className="text-center lg:text-xl mb-2 text-theme-4">
                 Adicione um novo participante
               </span>
               <input
                 id="participant"
                 name="participant"
                 placeholder="Nome"
-                className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full"
+                className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full"
                 required
                 ref={nameRef}
               ></input>
@@ -96,7 +96,7 @@ export default function Step2({
                   setOpenExpenses(true);
                 }
               }}
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-2xl h-fit"
+              className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg text-2xl h-fit"
             >
               <PlusCircle />
             </button>
@@ -110,20 +110,20 @@ export default function Step2({
                 : { display: "none" }
             }
           >
-            <span className="text-center lg:text-xl mb-2">
+            <span className="text-center lg:text-xl mb-2 text-theme-4">
               Gastou com algo?
             </span>
             <div className="flex flex-row gap-5">
               <button
                 type="button"
                 onClick={() => setOpenEdit(true)}
-                className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+                className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg lg:text-3xl h-fit"
               >
                 Sim
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
+                className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg lg:text-3xl h-fit"
               >
                 Nao
               </button>
@@ -134,27 +134,27 @@ export default function Step2({
             className="flex flex-col lg:flex-row justify-start items-center w-full gap-4"
             style={openEdit ? { display: "flex" } : { display: "none" }}
           >
-            <label>No que gastou?</label>
+            <label className="text-theme-4">No que gastou?</label>
             <input
               id="description"
               name="description"
               placeholder="Nome do gasto"
-              className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
+              className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
               required={openEdit}
               defaultValue={""}
             ></input>
-            <label>Quanto?</label>
+            <label className="text-theme-4">Quanto?</label>
             <input
               id="expenses"
               name="expenses"
               placeholder="Quanto gastou?"
               type="number"
-              className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
+              className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
               required={openEdit}
             ></input>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+              className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg text-3xl h-fit"
             >
               <PlusCircle />
             </button>
@@ -165,15 +165,15 @@ export default function Step2({
       <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-row flex-wrap justify-center items-center">
         {listOfParticipants.map((participant: ListOfParticipants) => (
           <div
-            className="bg-yellow-500 rounded-xl flex flex-row justify-center p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full"
+            className="bg-theme-5 rounded-xl flex flex-row justify-center p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full pl-0"
             key={participant.participant}
           >
             <div className="flex items-center w-1/3 flex-col justify-center">
-              <p className="w-12 h-12 flex border-2 border-black rounded-full items-center justify-center text-2xl">
+              <p className="w-12 h-12 flex border-2 border-black rounded-full items-center justify-center text-2xl text-theme-4">
                 {participant.participant &&
                   participant.participant[0]?.toUpperCase()}
               </p>
-              <span className="px-1 lg:text-lg w-full font-bold text-center break-words capitalize">
+              <span className="px-1 lg:text-lg w-full font-bold text-center break-words capitalize text-theme-4">
                 {participant.participant}
               </span>
             </div>
@@ -181,24 +181,23 @@ export default function Step2({
             <div className="flex flex-col gap-4 w-2/3 justify-center">
               <div className="flex items-center">
                 <>
-                  <label className="w-full">Gastou em:</label>
-                  <span className="px-1 lg:text-lg w-full font-bold break-words">
+                  <label className="w-full text-theme-4">Gastou em:</label>
+                  <span className="px-1 lg:text-lg w-full font-bold break-words text-theme-4">
                     {participant.description !== "" ? (
                       participant.description
                     ) : (
                       <Minus
                         size={24}
-                        color="#0d0c0c"
                         weight="bold"
-                        className="text-center"
+                        className="text-center text-theme-4"
                       />
                     )}
                   </span>
                 </>
               </div>
               <div className="flex items-center">
-                <label className="w-full">Quanto Gastou:</label>
-                <span className="px-1 lg:text-lg w-full font-bold break-words">
+                <label className="w-full text-theme-4">Quanto Gastou:</label>
+                <span className="px-1 lg:text-lg w-full font-bold break-words text-theme-4">
                   {participant.expenses ? `R$ ${participant.expenses}` : "R$ 0"}
                 </span>
               </div>

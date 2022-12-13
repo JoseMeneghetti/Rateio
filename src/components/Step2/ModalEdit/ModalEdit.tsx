@@ -80,7 +80,7 @@ export default function ModalEdit({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="relative w-full max-w-sm lg:max-w-lg rounded bg-yellow-500 shadow-custom">
+            <Dialog.Panel className="relative w-full max-w-sm lg:max-w-lg rounded bg-theme-5 shadow-custom">
               <button className="absolute top-0 right-0 p-2">
                 <X
                   color="black"
@@ -93,7 +93,7 @@ export default function ModalEdit({
                   }}
                 />
               </button>
-              <div className="my-10 bg-yellow-500 bg-opacity-90 h-fit rounded-lg px-5">
+              <div className="my-10 bg-theme-5 bg-opacity-90 h-fit rounded-lg px-5">
                 <div
                   className="flex flex-row justify-start items-end w-full gap-4"
                   style={
@@ -109,7 +109,7 @@ export default function ModalEdit({
                     <input
                       id="participant"
                       name="participant"
-                      className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full"
+                      className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full"
                       required
                       defaultValue={editablePerson.participant}
                     ></input>
@@ -121,60 +121,64 @@ export default function ModalEdit({
                         setOpenExpenses(true);
                       }
                     }}
-                    className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+                    className="px-4 py-2 bg-cardbg hover:bg-blue-6 text-theme-4 rounded-lg text-2xl h-fit"
                   >
                     <PlusCircle />
                   </button>
                 </div>
 
                 <div
-                  className="flex flex-row justify-start items-center w-full gap-4"
+                  className="flex flex-col justify-start items-center w-full gap-4"
                   style={
                     openExpenses && !openEdit
                       ? { display: "flex" }
                       : { display: "none" }
                   }
                 >
-                  <span>Gastou com algo?</span>
-                  <button
-                    type="button"
-                    onClick={() => setOpenEdit(true)}
-                    className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
-                  >
-                    Sim
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit"
-                  >
-                    Nao
-                  </button>
+                  <span className="text-center lg:text-xl mb-2 text-theme-4">
+                    Gastou com algo?
+                  </span>
+                  <div className="flex flex-row gap-5">
+                    <button
+                      type="button"
+                      onClick={() => setOpenEdit(true)}
+                      className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg lg:text-3xl h-fit"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg lg:text-3xl h-fit"
+                    >
+                      Nao
+                    </button>
+                  </div>
                 </div>
 
                 <div
                   className="flex flex-col justify-start items-center w-full gap-4"
                   style={openEdit ? { display: "flex" } : { display: "none" }}
                 >
-                  <label>No que gastou?</label>
+                  <label className="text-theme-4">No que gastou?</label>
                   <input
                     id="description"
                     name="description"
                     placeholder="Nome do gasto"
-                    className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
+                    className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
                     required={openEdit}
                   ></input>
-                  <label>Quanto?</label>
+                  <label className="text-theme-4">Quanto?</label>
                   <input
                     id="expenses"
                     name="expenses"
                     placeholder="Quanto gastou?"
                     type="number"
-                    className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-full "
+                    className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
                     required={openEdit}
                   ></input>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg text-3xl h-fit"
+                    className="px-4 py-2 bg-cardbg hover:bg-blue-6 text-theme-4 rounded-lg text-3xl h-fit"
                   >
                     <PlusCircle />
                   </button>

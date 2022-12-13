@@ -285,21 +285,21 @@ export default function Resultado({ data }: Props) {
               Compartilhe o Link do seu Rateio:{" "}
             </label>
             <input
-              className="bg-gray-100 py-2 px-4 rounded placeholder:text-black w-fit "
+              className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-fit "
               value={shortURL}
               disabled
             ></input>
           </div>
         )}
         <button
-          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
+          className="px-4 py-2 bg-theme-2 hover:bg-theme-3 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
           onClick={() => handleEditRateio()}
         >
           Editar
           <PencilSimple size={24} weight="bold" />
         </button>
         <button
-          className="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-yellow-500 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
+          className="px-4 py-2 bg-theme-2 hover:bg-theme-3 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
           onClick={() => GerarLink()}
         >
           Compartilhar
