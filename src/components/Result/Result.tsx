@@ -53,7 +53,7 @@ export default function Result({
             key={`${participants.participant}-${index}`}
             className="rounded-lg"
           >
-            <td className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg capitalize">
+            <td className="text-center rounded-lg bg-theme-5 text-theme-4 p-1 border-4 border-cardbg capitalize">
               {participants.participant}
             </td>
 
@@ -65,7 +65,7 @@ export default function Result({
                 )?.value;
                 return (
                   <td
-                    className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg"
+                    className="text-center rounded-lg bg-theme-5 text-theme-4 p-1 border-4 border-cardbg"
                     key={`${value}-${index}`}
                   >
                     R$ {value ? Number(value)?.toFixed(2) : (0).toFixed(2)}
@@ -74,15 +74,15 @@ export default function Result({
               }
             )}
 
-            <td className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg">
+            <td className="text-center rounded-lg bg-theme-5 text-theme-4 p-1 border-4 border-cardbg">
               R${Number(participants.expenses).toFixed(2)}
             </td>
             <td
-              className="text-center rounded-lg bg-yellow-theme p-1 border-4 border-cardbg"
+              className="text-center rounded-lg bg-theme-5 text-theme-4 p-1 border-4 border-cardbg"
               style={
                 totalPerson && totalPerson?.value > 0
-                  ? { backgroundColor: "green" }
-                  : { backgroundColor: "red" }
+                  ? { backgroundColor: "#768a4f" }
+                  : { backgroundColor: "#bd2f28" }
               }
             >
               {totalPerson && totalPerson?.value > 0

@@ -9,11 +9,18 @@ function Sugestion({ sugestion }: Props) {
     <>
       {sugestion.map((sugestion: Sugestion | any, index: number) => (
         <div
-          className="bg-cardbg w-fit h-auto p-4 border-b-2 border-yellow-theme rounded shadow-custom mt-10 rounded-t-3xl"
+          className="bg-cardbg w-fit h-auto p-4 border-b-2 border-theme-4 rounded shadow-custom mt-10 rounded-t-3xl"
           key={`${sugestion.name}-${index}`}
         >
           <div className="relative h-7">
-            <p className="w-20 h-20 flex border-2 bg-cardbg border-black rounded-full items-center justify-center text-2xl text-theme-4 absolute right-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -bottom-8">
+            <p
+              className="w-20 h-20 flex border-2 bg-cardbg border-black rounded-full items-center justify-center text-2xl text-theme-4 absolute right-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -bottom-8"
+              style={
+                sugestion?.receives 
+                  ? { backgroundColor: "#768a4f" }
+                  : { backgroundColor: "#bd2f28" }
+              }
+            >
               {sugestion.name && sugestion.name[0]?.toUpperCase()}
             </p>
           </div>

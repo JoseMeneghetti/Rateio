@@ -78,7 +78,7 @@ export default function Home({ data }: Props) {
             />
             {listOfParticipants.length > 1 && (
               <button
-                className="px-4 py-2 my-10 bg-theme-2 hover:bg-theme-3 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3"
+                className="px-4 py-2 my-10 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
                 onClick={() => {
                   setStep3(true);
                   setStep2(false);

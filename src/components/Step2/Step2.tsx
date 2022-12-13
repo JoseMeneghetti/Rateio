@@ -191,7 +191,7 @@ export default function Step2({
               <div className="flex items-center">
                 <>
                   <label className="w-full text-theme-4">Gastou em:</label>
-                  <span className="px-1 lg:text-lg w-full font-bold break-words text-theme-4">
+                  <span className="px-1 capitalize lg:text-lg w-full font-bold break-words text-theme-4">
                     {participant.description !== "" ? (
                       participant.description
                     ) : (

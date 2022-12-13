@@ -291,14 +291,14 @@ export default function Resultado({ data }: Props) {
           </div>
         )}
         <button
-          className="px-4 py-2 bg-theme-2 hover:bg-theme-3 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
+          className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
           onClick={() => handleEditRateio()}
         >
           Editar
           <PencilSimple size={24} weight="bold" />
         </button>
         <button
-          className="px-4 py-2 bg-theme-2 hover:bg-theme-3 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3"
+          className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
           onClick={() => GerarLink()}
         >
           Compartilhar
