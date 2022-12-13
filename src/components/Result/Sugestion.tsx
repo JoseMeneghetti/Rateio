@@ -17,8 +17,8 @@ function Sugestion({ sugestion }: Props) {
               className="w-20 h-20 flex border-2 bg-cardbg border-black rounded-full items-center justify-center text-2xl text-theme-4 absolute right-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -bottom-8"
               style={
                 sugestion?.receives 
-                  ? { backgroundColor: "#768a4f" }
-                  : { backgroundColor: "#bd2f28" }
+                  ? { borderColor: "#768a4f" }
+                  : { borderColor: "#bd2f28" }
               }
             >
               {sugestion.name && sugestion.name[0]?.toUpperCase()}
