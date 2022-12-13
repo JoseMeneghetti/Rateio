@@ -1,13 +1,16 @@
 import React, { FormEvent, useRef, useState } from "react";
 import { Minus, PencilSimple, PlusCircle, Trash } from "phosphor-react";
-import { ListOfParticipants } from "../../pages";
+
 import ModalEdit from "./ModalEdit/ModalEdit";
+import PopoverFoods from "../PopoverFoods/PopoverFoods";
+import { ListOfParticipants } from "../../Types/global";
 
 interface Props {
   formRef: any;
-  listOfParticipants: any;
+  listOfParticipants: ListOfParticipants[];
   setListOfParticipants: any;
 }
+
 export default function Step2({
   formRef,
   listOfParticipants,
@@ -17,6 +20,7 @@ export default function Step2({
   const [openEdit, setOpenEdit] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(true);
   const [editablePerson, setEditablePerson] = useState<any>(null);
+  const [icon, setIcon] = useState<any>(null);
 
   const nameRef = useRef<any>(null);
 
@@ -38,13 +42,16 @@ export default function Step2({
       return;
     }
 
-    setListOfParticipants([...listOfParticipants, dataForm]);
+    const formPlusIcons = { ...dataForm, icon: icon };
+
+    setListOfParticipants([...listOfParticipants, formPlusIcons]);
 
     if (formRef) {
       formRef?.current?.reset();
     }
 
     setOpenEdit(false);
+    setIcon(null);
     setOpenExpenses(false);
   }
 
@@ -60,6 +67,7 @@ export default function Step2({
     setListOfParticipants([...newData]);
   }
 
+  console.log(listOfParticipants)
   return (
     <>
       <div className="my-10 bg-theme-5 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
@@ -152,6 +160,7 @@ export default function Step2({
               className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
               required={openEdit}
             ></input>
+            <PopoverFoods setIcon={setIcon} icon={icon}/>
             <button
               type="submit"
               className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg text-3xl h-fit"
@@ -224,6 +233,8 @@ export default function Step2({
         editablePerson={editablePerson}
         setListOfParticipants={setListOfParticipants}
         listOfParticipants={listOfParticipants}
+        setIcon={setIcon}
+        icon={icon}
       />
     </>
   );

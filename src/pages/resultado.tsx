@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ListOfParticipants } from ".";
 import { GetServerSideProps } from "next";
 import CardResultado from "../components/Card/CardResultado";
 import Result from "../components/Result/Result";
 import {
   FindHowManyPayWithoutDiferences,
   ListForResult,
+  ListOfParticipants,
   OnlyParticipants,
+  ParticipantsShare,
   SumOfPaids,
   Total,
 } from "../Types/global";
@@ -78,13 +79,13 @@ export default function Resultado({ data }: Props) {
   useEffect(() => {
     if (listOfParticipants.length && participantsShare.length) {
       const findHowManyPayWithoutDiferences = participantsShare.reduce(
-        (total: any, currentElement: any) => {
+        (total: any, currentElement: ParticipantsShare) => {
           const findWhoPaid = listOfParticipants.find(
             (participants: ListOfParticipants) =>
               participants.description === currentElement.expenseName
           );
 
-          const perPerson = currentElement.participants.map((name: string) => {
+          const perPerson = currentElement.participants.map((name) => {
             return {
               name: name,
               value: findWhoPaid.expenses / currentElement.participants.length,
@@ -95,6 +96,7 @@ export default function Resultado({ data }: Props) {
             ...total,
             {
               expenseName: currentElement.expenseName,
+              icon: currentElement.icon,
               participants: [...perPerson],
             },
           ];
@@ -237,9 +239,6 @@ export default function Resultado({ data }: Props) {
         },
         []
       );
-
-      console.log(total);
-      console.log(sugestion);
 
       findHowManyPayWithoutDiferences &&
         setFindHowManyPayWithoutDiferences(findHowManyPayWithoutDiferences);

@@ -1,3 +1,16 @@
+export interface ListOfParticipants {
+  description: string;
+  expenses: string | number;
+  icon: string | null;
+  participant: string;
+}
+
+export interface ParticipantsShare {
+  participants: string[];
+  expenseName: string;
+  icon: string;
+}
+
 export interface Participant {
   name: string;
   value: number;
@@ -6,6 +19,7 @@ export interface Participant {
 export interface FindHowManyPayWithoutDiferences {
   expenseName: string;
   participants: Participant[];
+  icon?: string;
 }
 
 export interface OnlyParticipants {

@@ -1,7 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusCircle, X } from "phosphor-react";
 import { FormEvent, Fragment, useRef, useState } from "react";
-import { ListOfParticipants } from "../../../pages";
+import { ListOfParticipants } from "../../../Types/global";
+import PopoverFoods from "../../PopoverFoods/PopoverFoods";
 
 interface Props {
   setIsOpenModal: any;
@@ -9,6 +10,8 @@ interface Props {
   editablePerson: ListOfParticipants | any;
   setListOfParticipants: any;
   listOfParticipants: ListOfParticipants[];
+  setIcon: any;
+  icon: string;
 }
 
 export default function ModalEdit({
@@ -17,6 +20,8 @@ export default function ModalEdit({
   editablePerson,
   setListOfParticipants,
   listOfParticipants,
+  setIcon,
+  icon,
 }: Props) {
   const [openExpenses, setOpenExpenses] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -37,10 +42,14 @@ export default function ModalEdit({
       (el: ListOfParticipants) => el.participant !== editablePerson.participant
     );
 
-    setListOfParticipants([...newData, dataForm]);
+    const formPlusIcons = { ...dataForm, icon: icon };
+
+    setListOfParticipants([...newData, formPlusIcons]);
+
     setIsOpenModal(false);
     setOpenExpenses(false);
     setOpenEdit(false);
+    setIcon(null);
   }
 
   return (
@@ -53,6 +62,7 @@ export default function ModalEdit({
           setIsOpenModal(false);
           setOpenExpenses(false);
           setOpenEdit(false);
+          setIcon(null);
         }}
       >
         <Transition.Child
@@ -90,6 +100,7 @@ export default function ModalEdit({
                     setIsOpenModal(false);
                     setOpenExpenses(false);
                     setOpenEdit(false);
+                    setIcon(null);
                   }}
                 />
               </button>
@@ -176,6 +187,7 @@ export default function ModalEdit({
                     className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
                     required={openEdit}
                   ></input>
+                  <PopoverFoods setIcon={setIcon} icon={icon} />
                   <button
                     type="submit"
                     className="px-4 py-2 bg-cardbg hover:bg-blue-6 text-theme-4 rounded-lg text-3xl h-fit"

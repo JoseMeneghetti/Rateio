@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { ListOfParticipants } from "../../pages";
 import {
   FindHowManyPayWithoutDiferences,
   ListForResult,
+  ListOfParticipants,
   Total,
 } from "../../Types/global";
 

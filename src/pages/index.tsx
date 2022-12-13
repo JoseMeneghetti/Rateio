@@ -3,25 +3,22 @@ import { ArrowFatLineRight } from "phosphor-react";
 import { useEffect, useRef, useState } from "react";
 import Step2 from "../components/Step2/Step2";
 import Step3 from "../components/Step3/Step3";
-
-export interface ListOfParticipants {
-  participant: string;
-  expenses: number;
-  description: string;
-}
+import { ListOfParticipants } from "../Types/global";
 
 interface Props {
   data: Data;
 }
 
 type Data = {
-  listOfParticipantsByEdition: ListOfParticipants[] | any;
+  listOfParticipantsByEdition: ListOfParticipants[];
   nomeRateioByEdition: string | any;
 };
 
 export default function Home({ data }: Props) {
   const [nomeRateio, setnomeRateio] = useState("");
-  const [listOfParticipants, setListOfParticipants] = useState<any>([]);
+  const [listOfParticipants, setListOfParticipants] = useState<
+    ListOfParticipants[]
+  >([]);
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
 
@@ -34,9 +31,6 @@ export default function Home({ data }: Props) {
       setStep2(true);
     }
   }, []);
-
-  console.log(step2);
-  console.log(step3);
 
   return (
     <>

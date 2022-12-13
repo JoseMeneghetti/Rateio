@@ -1,13 +1,14 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { ListOfParticipants } from "../../pages";
 import { useRouter } from "next/router";
 import { Switch } from "@headlessui/react";
 import SwitchButton from "./SwitchButton/SwitchButton";
+import { ListOfParticipants } from "../../Types/global";
 
 interface Props {
-  listOfParticipants: any;
+  listOfParticipants: ListOfParticipants[] | any;
   nomeRateio: string;
 }
+
 export default function Step3({ listOfParticipants, nomeRateio }: Props) {
   const [typesOfExpenses, setTypesOfExpenses] = useState([]);
   const [names, setNames] = useState([]);
@@ -35,14 +36,22 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
             .participants.push(participantName);
           return [...total];
         }
-
+        const icon = listOfParticipants.find(
+          (el: ListOfParticipants) => el.description === typeOfExpense
+        ).icon;
         return [
           ...total,
-          { participants: [participantName], expenseName: typeOfExpense },
+          {
+            participants: [participantName],
+            expenseName: typeOfExpense,
+            icon: icon,
+          },
         ];
       },
       []
     );
+
+    console.log(participantsShare);
 
     router.push({
       pathname: "/resultado",
@@ -96,7 +105,9 @@ export default function Step3({ listOfParticipants, nomeRateio }: Props) {
                 {names.map((name: string) => (
                   <div className="flex items-center" key={name}>
                     <SwitchButton name={`${expenseName}-${name}`} />
-                    <label className="ml-3 min-w-0 flex-1 text-theme-4 capitalize">{name}</label>
+                    <label className="ml-3 min-w-0 flex-1 text-theme-4 capitalize">
+                      {name}
+                    </label>
                   </div>
                 ))}
               </div>

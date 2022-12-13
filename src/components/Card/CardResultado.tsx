@@ -1,5 +1,8 @@
-import { ListOfParticipants } from "../../pages";
-import { FindHowManyPayWithoutDiferences } from "../../Types/global";
+import Image from "next/image";
+import {
+  FindHowManyPayWithoutDiferences,
+  ListOfParticipants,
+} from "../../Types/global";
 
 interface Props {
   findHowManyPayWithoutDiferences: FindHowManyPayWithoutDiferences[];
@@ -19,9 +22,20 @@ function CardResultado({
         );
         return (
           <div
-            className="bg-cardbg w-fit h-auto p-4 border-b-2 border-yellow-theme rounded shadow-custom"
+            className="bg-cardbg w-fit h-auto p-4 border-b-2 border-yellow-theme rounded shadow-custom mt-10 rounded-t-3xl"
             key={`${element.expenseName}-${index}`}
           >
+            {element.icon && (
+              <div className="relative h-7">
+                <Image
+                  src={`/food/${element.icon}.png`}
+                  width={80}
+                  height={80}
+                  alt={""}
+                  className="absolute right-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -bottom-8"
+                />
+              </div>
+            )}
             <strong className="text-xl text-white capitalize self-center flex justify-center mb-2">
               {element.expenseName}
             </strong>
@@ -39,7 +53,9 @@ function CardResultado({
               </div>
             ))}
             <div className="flex flex-col">
-              <span className="text-white text-lg flex justify-center p-2 ">Quem pagou?</span>
+              <span className="text-white text-lg flex justify-center p-2 ">
+                Quem pagou?
+              </span>
               <div className="flex flex-row justify-between gap-4">
                 <span className="text-grey-theme capitalize">
                   {findWhoPaid?.participant}
