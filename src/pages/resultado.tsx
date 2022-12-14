@@ -39,7 +39,7 @@ export default function Resultado({ data }: Props) {
   const [listForResult, setListForResult] = useState<ListForResult | any>([]);
   const [sugestionList, setSugestionList] = useState<any>([]);
   const [shortURL, setShortURL] = useState("");
-  const [fade, setFade] = useState(true);
+  const [fade, setFade] = useState(false);
   const tableRef = useRef<any>(null);
 
   const router = useRouter();
@@ -256,6 +256,8 @@ export default function Resultado({ data }: Props) {
   if (!listOfParticipants || !participantsShare) {
     return <div> Ocorreu um erro...</div>;
   }
+
+  console.log(fade)
 
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center">

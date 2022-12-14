@@ -30,7 +30,7 @@ a {
 
 @layer components {
   .fade-overflow {
-    -webkit-mask-image: linear-gradient(90deg, #000 70%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
   }
   ::-webkit-scrollbar-track {
     background-color: transparent;
