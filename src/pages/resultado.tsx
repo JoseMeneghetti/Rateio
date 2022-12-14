@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GetServerSideProps } from "next";
 import CardResultado from "../components/Card/CardResultado";
 import Result from "../components/Result/Result";
@@ -15,6 +15,7 @@ import Sugestion from "../components/Result/Sugestion";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { PencilSimple, Share } from "phosphor-react";
+import { table } from "console";
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
@@ -38,6 +39,8 @@ export default function Resultado({ data }: Props) {
   const [listForResult, setListForResult] = useState<ListForResult | any>([]);
   const [sugestionList, setSugestionList] = useState<any>([]);
   const [shortURL, setShortURL] = useState("");
+  const [fade, setFade] = useState(true);
+  const tableRef = useRef<any>(null);
 
   const router = useRouter();
 
@@ -263,7 +266,23 @@ export default function Resultado({ data }: Props) {
           listOfParticipants={listOfParticipants}
         />
       </div>
-      <div className="my-10 h-fit w-full flex flex-wrap gap-10">
+      <div
+        className={`my-10 h-fit w-full flex flex-wrap gap-10 overflow-auto relative ${
+          !fade && "fade-overflow"
+        }`}
+        ref={tableRef}
+        onScroll={() => {
+          const resultOffset =
+            tableRef.current.scrollWidth - tableRef.current.offsetWidth;
+          if (resultOffset !== tableRef.current.scrollLeft) {
+            setFade(false);
+          } else {
+            if (!fade) {
+              setFade(true);
+            }
+          }
+        }}
+      >
         <Result
           total={total}
           listOfParticipants={listOfParticipants}
