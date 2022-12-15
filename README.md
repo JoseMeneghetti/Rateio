@@ -1,6 +1,6 @@
 ![rateio.verce.app logo image](https://rateio.vercel.app/Rateio.png)
 
-Welcome to Rateio.vercel.app
+Welcome to [rateio.vercel.app](https://rateio.vercel.app)
 
 The digital split for your event.
 
