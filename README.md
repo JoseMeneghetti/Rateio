@@ -73,4 +73,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Thank you! 
 
-Develop by Jose Ricardo Meneghetti Pinto.
+Developed by Jose Ricardo Meneghetti Pinto.
