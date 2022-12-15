@@ -20,7 +20,7 @@ Choose if the person pays something or not.
 
 ![](https://snipboard.io/mb5WvG.jpg)
 
-If this person paid something add the description of the expense and how much was it, and an icon to add it.
+If this person paid something add the description of the expense and how much it was, and an icon to add it.
 
 ![](https://snipboard.io/EavptY.jpg)
 
@@ -43,7 +43,7 @@ Here in the second section the detailed expenses and how many is the debt or the
 
 ![](https://snipboard.io/hYVq5H.jpg)
 
-Here is a suggestion of "who can pay who", to split the expenses correctly.
+Here is a suggestion of "who pays who", to split the expenses correctly.
 
 ![](https://snipboard.io/0mQAD3.jpg)
 
