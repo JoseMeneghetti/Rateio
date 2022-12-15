@@ -1,6 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![rateio.verce.app logo image](https://rateio.vercel.app/Rateio.png)
 
-## Getting Started
+Welcome to Rateio.vercel.app
+
+The digital split for your event.
+
+## Summary
+
+It is an App that splits the consumption expenses of events that you choose (parties, barbecues, dinners, etc...) and shares the price with people who participate in them.
+
+## How it Works
+
+### Step1
+
+Create a name for your event and start adding people.
+
+![](https://snipboard.io/2SkGOm.jpg)
+
+
+### Step 1
+
+Create a name for your event and start adding people.
+![](https://snipboard.io/2SkGOm.jpg)
+
+Chosse if the person pay something or not.
+![](https://snipboard.io/mb5WvG.jpg)
+
+If this person payed something add the description of the expense and how much was it, and an icon to add it.
+![](https://snipboard.io/EavptY.jpg)
+
+You can edit or delete the people from the list. If you don't need move to next step.
+![](https://snipboard.io/ZMn5oW.jpg)
+### Step 2
+
+Choose who participate of the expenses. and move to the result.
+![](https://snipboard.io/fm9gk6.jpg)
+
+### Result
+
+Here in the first section you can see the Expenses and who participate of that and who paid it
+![](https://snipboard.io/7tNgCR.jpg)
+
+Here in the second section the detailed expenses and how many is the debt or the credit for witch person.
+![](https://snipboard.io/hYVq5H.jpg)
+
+Here a suggestion of "who can pay who", to split the expenses correct.
+![](https://snipboard.io/0mQAD3.jpg)
+
+And in the footer you have 2 buttons: 
+
+The Edit button that you can EDIT your split going to the first Step.
+
+The Share button that creates a link of your result that you can share with the participants.
+
+
+## For Development
 
 First, run the development server:
 
@@ -12,23 +65,11 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This is a [Next.js](https://nextjs.org/) based project.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Thank you! 
+
+Develop by Jose Ricardo Meneghetti Pinto.
