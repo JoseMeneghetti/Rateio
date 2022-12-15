@@ -12,38 +12,39 @@ It is an App that splits the consumption expenses of events that you choose (par
 
 ### Step1
 
-Create a name for your event and start adding people.
+Create a name for your event and start to adding people.
 
-![](https://snipboard.io/2SkGOm.jpg)
-
-
-### Step 1
-
-Create a name for your event and start adding people.
 ![](https://snipboard.io/2SkGOm.jpg)
 
 Chosse if the person pay something or not.
+
 ![](https://snipboard.io/mb5WvG.jpg)
 
 If this person payed something add the description of the expense and how much was it, and an icon to add it.
+
 ![](https://snipboard.io/EavptY.jpg)
 
 You can edit or delete the people from the list. If you don't need move to next step.
+
 ![](https://snipboard.io/ZMn5oW.jpg)
 ### Step 2
 
 Choose who participate of the expenses. and move to the result.
+
 ![](https://snipboard.io/fm9gk6.jpg)
 
 ### Result
 
-Here in the first section you can see the Expenses and who participate of that and who paid it
+Here in the first section you can see the Expenses and who participate of that and who paid it.
+
 ![](https://snipboard.io/7tNgCR.jpg)
 
 Here in the second section the detailed expenses and how many is the debt or the credit for witch person.
+
 ![](https://snipboard.io/hYVq5H.jpg)
 
 Here a suggestion of "who can pay who", to split the expenses correct.
+
 ![](https://snipboard.io/0mQAD3.jpg)
 
 And in the footer you have 2 buttons: 
