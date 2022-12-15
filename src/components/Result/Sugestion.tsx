@@ -9,7 +9,7 @@ function Sugestion({ sugestion }: Props) {
     <>
       {sugestion.map((sugestion: Sugestion | any, index: number) => (
         <div
-          className="bg-cardbg w-fit h-auto p-4 border-b-2 border-theme-4 rounded shadow-custom mt-10 rounded-t-3xl"
+          className="bg-cardbg min-w-[200px] w-fit h-auto p-4 border-b-2 border-theme-4 rounded shadow-custom mt-10 rounded-t-3xl"
           key={`${sugestion.name}-${index}`}
         >
           <div className="relative h-7">

@@ -1,4 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { GetServerSideProps } from "next";
 import CardResultado from "../components/Card/CardResultado";
 import Result from "../components/Result/Result";
@@ -15,12 +19,13 @@ import Sugestion from "../components/Result/Sugestion";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { PencilSimple, Share } from "phosphor-react";
-import { table } from "console";
+import useDeviceType from "../lib/hooks/useDeviceType";
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
   participantsShare: string[] | any;
   nomeRateio: string;
+  svg?: any;
 };
 
 interface Props {
@@ -30,6 +35,7 @@ export default function Resultado({ data }: Props) {
   const participantsShare: any = data.participantsShare;
   const listOfParticipants = data.listOfParticipants;
   const nomeRateio = data.nomeRateio;
+  const svg = data.svg;
 
   const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
     useState([]);
@@ -41,7 +47,7 @@ export default function Resultado({ data }: Props) {
   const [shortURL, setShortURL] = useState("");
   const [fade, setFade] = useState(false);
   const tableRef = useRef<any>(null);
-
+  const device = useDeviceType();
   const router = useRouter();
 
   async function GerarLink() {
@@ -253,11 +259,25 @@ export default function Resultado({ data }: Props) {
     }
   }, [listOfParticipants, participantsShare]);
 
+  useEffect(() => {
+    console.log(device);
+    if (device) {
+      if (device !== "Phone") {
+        setFade(true);
+      }
+    }
+  }, [device]);
+
   if (!listOfParticipants || !participantsShare) {
     return <div> Ocorreu um erro...</div>;
   }
 
-  console.log(fade)
+  //to do profile img
+  // const Image = () => (
+  //   <div>
+  //     <img src={`data:image/svg+xml;utf8,${svg}`} />
+  //   </div>
+  // );
 
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center">
@@ -326,6 +346,8 @@ export default function Resultado({ data }: Props) {
           <Share size={24} weight="bold" />
         </button>
       </div>
+      {/* to do profile img */}
+      {/* <Image /> */}
     </div>
   );
 }
@@ -339,6 +361,7 @@ export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (
     listOfParticipants: JSON.parse(context.query.listOfParticipants as string),
     participantsShare: JSON.parse(context.query.participantsShare as string),
     nomeRateio: context.query.nomeRateio as string,
+    svg: context.query.svg ?? null,
   };
   // Pass data to the page via props
 

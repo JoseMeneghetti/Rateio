@@ -22,7 +22,7 @@ function CardResultado({
         );
         return (
           <div
-            className="bg-cardbg w-fit h-auto p-4 border-b-2 border-theme-4 rounded shadow-custom mt-10 rounded-t-3xl"
+            className="bg-cardbg w-fit min-w-[200px] h-auto p-4 border-b-2 border-theme-4 rounded shadow-custom mt-10 rounded-t-3xl"
             key={`${element.expenseName}-${index}`}
           >
             {element.icon && (
