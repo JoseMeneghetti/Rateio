@@ -10,7 +10,7 @@ It is an App that splits the consumption expenses of events that you choose (par
 
 ## How it Works
 
-### Step1
+### First Step
 
 Create a name for your event and start to adding people.
 
@@ -24,18 +24,18 @@ If this person paid something add the description of the expense and how much wa
 
 ![](https://snipboard.io/EavptY.jpg)
 
-You can edit or delete the people from the list. If you don't need to move to the next step.
+You can edit or delete the people from the list. If you don't need, move to the next step.
 
 ![](https://snipboard.io/ZMn5oW.jpg)
-### Step 2
+### Second Step 
 
-Choose who participates in the expenses. and move to the result.
+Choose who participates in the expenses, and move to the result.
 
 ![](https://snipboard.io/fm9gk6.jpg)
 
 ### Result
 
-Here in the first section, you can see the Expenses and who participate in that and who paid it.
+Here in the first section, you can see the split of the Expenses and who participate in that and who paid it.
 
 ![](https://snipboard.io/7tNgCR.jpg)
 
