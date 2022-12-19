@@ -24,4 +24,8 @@ export const mockIcons = [
     "vegetables",
     "wine",
     "wine-glass",
+    "disposable",
+    "taxi",
+    "vape",
+    "hookah"
   ];
