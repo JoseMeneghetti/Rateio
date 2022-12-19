@@ -4,6 +4,7 @@ import { Minus, PencilSimple, PlusCircle, Trash } from "phosphor-react";
 import ModalEdit from "./ModalEdit/ModalEdit";
 import PopoverFoods from "../PopoverFoods/PopoverFoods";
 import { ListOfParticipants } from "../../Types/global";
+import Image from "next/image";
 
 interface Props {
   formRef: any;
@@ -67,7 +68,7 @@ export default function Step2({
     setListOfParticipants([...newData]);
   }
 
-  console.log(listOfParticipants)
+  console.log(listOfParticipants);
   return (
     <>
       <div className="my-10 bg-theme-5 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
@@ -160,7 +161,7 @@ export default function Step2({
               className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
               required={openEdit}
             ></input>
-            <PopoverFoods setIcon={setIcon} icon={icon}/>
+            <PopoverFoods setIcon={setIcon} icon={icon} />
             <button
               type="submit"
               className="px-4 py-2 bg-cardbg hover:bg-theme-6 text-theme-4 rounded-lg text-3xl h-fit"
@@ -177,7 +178,7 @@ export default function Step2({
             className="bg-theme-5 rounded-xl flex flex-row justify-center p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full pl-0"
             key={participant.participant}
           >
-            <div className="flex items-center w-1/3 flex-col justify-center">
+            <div className="flex items-center w-2/6 flex-col justify-center">
               <p className="w-12 h-12 flex border-2 border-black rounded-full items-center justify-center text-2xl text-theme-4">
                 {participant.participant &&
                   participant.participant[0]?.toUpperCase()}
@@ -187,7 +188,7 @@ export default function Step2({
               </span>
             </div>
 
-            <div className="flex flex-col gap-4 w-2/3 justify-center">
+            <div className="flex flex-col gap-4 w-3/6 justify-center">
               <div className="flex items-center">
                 <>
                   <label className="w-full text-theme-4">Gastou em:</label>
@@ -212,17 +213,29 @@ export default function Step2({
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center gap-5">
-              <PencilSimple
-                size={24}
-                className="cursor-pointer"
-                onClick={() => handleEdit(participant)}
-              />
-              <Trash
-                size={24}
-                className="cursor-pointer"
-                onClick={() => handleDelete(participant)}
-              />
+            <div className="flex flex-col items-center justify-center gap-5 w-1/6">
+              {participant.icon && (
+                <div>
+                  <Image
+                    src={`/food/${participant.icon}.png`}
+                    width={50}
+                    height={50}
+                    alt={""}
+                  />
+                </div>
+              )}
+              <div className="flex flex-row justify-between w-full">
+                <PencilSimple
+                  size={24}
+                  className="cursor-pointer"
+                  onClick={() => handleEdit(participant)}
+                />
+                <Trash
+                  size={24}
+                  className="cursor-pointer"
+                  onClick={() => handleDelete(participant)}
+                />
+              </div>
             </div>
           </div>
         ))}

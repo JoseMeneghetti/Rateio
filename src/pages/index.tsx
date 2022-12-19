@@ -3,7 +3,10 @@ import { ArrowFatLineRight } from "phosphor-react";
 import { useEffect, useRef, useState } from "react";
 import Step2 from "../components/Step2/Step2";
 import Step3 from "../components/Step3/Step3";
-import { ListOfParticipants } from "../Types/global";
+import {
+  FindHowManyPayWithoutDiferences,
+  ListOfParticipants,
+} from "../Types/global";
 
 interface Props {
   data: Data;
@@ -11,6 +14,7 @@ interface Props {
 
 type Data = {
   listOfParticipantsByEdition: ListOfParticipants[];
+  findHowManyPayWithoutDiferences: FindHowManyPayWithoutDiferences[];
   nomeRateioByEdition: string | any;
 };
 
@@ -19,14 +23,21 @@ export default function Home({ data }: Props) {
   const [listOfParticipants, setListOfParticipants] = useState<
     ListOfParticipants[]
   >([]);
+  const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
+    useState<FindHowManyPayWithoutDiferences[]>([]);
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
 
   const formRef = useRef<any>(null);
 
   useEffect(() => {
-    if (data.listOfParticipantsByEdition && data.nomeRateioByEdition) {
+    if (
+      data.listOfParticipantsByEdition &&
+      data.nomeRateioByEdition &&
+      data.findHowManyPayWithoutDiferences
+    ) {
       setListOfParticipants(data.listOfParticipantsByEdition);
+      setFindHowManyPayWithoutDiferences(data.findHowManyPayWithoutDiferences);
       setnomeRateio(data.nomeRateioByEdition);
       setStep2(true);
     }
@@ -94,6 +105,7 @@ export default function Home({ data }: Props) {
           <Step3
             listOfParticipants={listOfParticipants}
             nomeRateio={nomeRateio}
+            findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
           />
         )}
       </div>
@@ -109,6 +121,9 @@ export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (
   const data = {
     listOfParticipantsByEdition: JSON.parse(
       (context.query.listOfParticipants as string) ?? null
+    ),
+    findHowManyPayWithoutDiferences: JSON.parse(
+      (context.query.findHowManyPayWithoutDiferences as string) ?? null
     ),
     nomeRateioByEdition: (context.query.nomeRateio as string) ?? null,
   };

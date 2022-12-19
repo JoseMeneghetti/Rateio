@@ -80,11 +80,12 @@ export default function Resultado({ data }: Props) {
       pathname: "/",
       query: {
         listOfParticipants: JSON.stringify(listOfParticipants),
+        findHowManyPayWithoutDiferences: JSON.stringify(findHowManyPayWithoutDiferences),
         nomeRateio: nomeRateio,
       },
     });
   }
-
+  console.log(findHowManyPayWithoutDiferences,'findHowManyPayWithoutDiferences')
   useEffect(() => {
     if (listOfParticipants.length && participantsShare.length) {
       const findHowManyPayWithoutDiferences = participantsShare.reduce(

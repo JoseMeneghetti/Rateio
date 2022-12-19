@@ -1,12 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
+import {
+  FindHowManyPayWithoutDiferences,
+  Participant,
+} from "../../../Types/global";
 
 interface Props {
   name: string;
+  findHowManyPayWithoutDiferences?: FindHowManyPayWithoutDiferences[];
 }
 
-export default function SwitchButton({ name }: Props) {
+export default function SwitchButton({
+  name,
+  findHowManyPayWithoutDiferences,
+}: Props) {
   const [enabled, setEnabled] = useState(true);
+
+  console.log(
+    findHowManyPayWithoutDiferences,
+    "findHowManyPayWithoutDiferences"
+  );
+
+  useEffect(() => {
+    const splited = name.split("-");
+    const typeOfExpense = splited[0];
+    const participantName = splited[1];
+    const findType: FindHowManyPayWithoutDiferences[] | any =
+      findHowManyPayWithoutDiferences?.find(
+        (el) => el.expenseName === typeOfExpense
+      );
+
+    if (findType) {
+      const findParticipant = findType.participants.find(
+        (el: Participant) => el.name === participantName
+      );
+
+      setEnabled(findParticipant ? true : false);
+    }
+  }, []);
 
   return (
     <div className="py-2">
