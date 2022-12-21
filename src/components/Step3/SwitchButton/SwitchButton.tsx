@@ -16,10 +16,6 @@ export default function SwitchButton({
 }: Props) {
   const [enabled, setEnabled] = useState(true);
 
-  console.log(
-    findHowManyPayWithoutDiferences,
-    "findHowManyPayWithoutDiferences"
-  );
 
   useEffect(() => {
     const splited = name.split("-");

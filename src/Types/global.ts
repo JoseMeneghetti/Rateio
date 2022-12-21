@@ -3,6 +3,7 @@ export interface ListOfParticipants {
   expenses: string | number;
   icon: string | null;
   participant: string;
+  thumbPhoto?: Uint8Array;
 }
 
 export interface ParticipantsShare {

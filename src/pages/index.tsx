@@ -3,22 +3,29 @@ import { ArrowFatLineRight } from "phosphor-react";
 import { useEffect, useRef, useState } from "react";
 import Step2 from "../components/Step2/Step2";
 import Step3 from "../components/Step3/Step3";
+import { decodeBase64 } from "../lib/utils/base64";
+import pako from "pako";
+
 import {
   FindHowManyPayWithoutDiferences,
   ListOfParticipants,
 } from "../Types/global";
 
+type Result = {
+  result: Data;
+};
 interface Props {
-  data: Data;
+  data: Result;
 }
 
 type Data = {
-  listOfParticipantsByEdition: ListOfParticipants[];
+  listOfParticipants: ListOfParticipants[];
   findHowManyPayWithoutDiferences: FindHowManyPayWithoutDiferences[];
-  nomeRateioByEdition: string | any;
+  nomeRateio: string | any;
 };
 
 export default function Home({ data }: Props) {
+  console.log(data);
   const [nomeRateio, setnomeRateio] = useState("");
   const [listOfParticipants, setListOfParticipants] = useState<
     ListOfParticipants[]
@@ -32,13 +39,15 @@ export default function Home({ data }: Props) {
 
   useEffect(() => {
     if (
-      data.listOfParticipantsByEdition &&
-      data.nomeRateioByEdition &&
-      data.findHowManyPayWithoutDiferences
+      data?.result?.listOfParticipants &&
+      data?.result?.nomeRateio &&
+      data?.result?.findHowManyPayWithoutDiferences
     ) {
-      setListOfParticipants(data.listOfParticipantsByEdition);
-      setFindHowManyPayWithoutDiferences(data.findHowManyPayWithoutDiferences);
-      setnomeRateio(data.nomeRateioByEdition);
+      setListOfParticipants(data.result.listOfParticipants);
+      setFindHowManyPayWithoutDiferences(
+        data.result.findHowManyPayWithoutDiferences
+      );
+      setnomeRateio(data.result.nomeRateio);
       setStep2(true);
     }
   }, []);
@@ -113,19 +122,17 @@ export default function Home({ data }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (
+export const getServerSideProps: GetServerSideProps<{ data: Result }> = async (
   context
 ) => {
   // Fetch data from external API
 
   const data = {
-    listOfParticipantsByEdition: JSON.parse(
-      (context.query.listOfParticipants as string) ?? null
-    ),
-    findHowManyPayWithoutDiferences: JSON.parse(
-      (context.query.findHowManyPayWithoutDiferences as string) ?? null
-    ),
-    nomeRateioByEdition: (context.query.nomeRateio as string) ?? null,
+    result: context.query.result
+      ? JSON.parse(
+          pako.inflate(decodeBase64(context.query.result), { to: "string" })
+        )
+      : null,
   };
   // Pass data to the page via props
 

@@ -1,16 +1,25 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { Switch } from "@headlessui/react";
 import SwitchButton from "./SwitchButton/SwitchButton";
-import { FindHowManyPayWithoutDiferences, ListOfParticipants } from "../../Types/global";
+import {
+  FindHowManyPayWithoutDiferences,
+  ListOfParticipants,
+} from "../../Types/global";
+
+import pako from "pako";
+import { encodeBase64 } from "../../lib/utils/base64";
 
 interface Props {
   listOfParticipants: ListOfParticipants[] | any;
   nomeRateio: string;
-  findHowManyPayWithoutDiferences?: FindHowManyPayWithoutDiferences[]
+  findHowManyPayWithoutDiferences?: FindHowManyPayWithoutDiferences[];
 }
 
-export default function Step3({ listOfParticipants, nomeRateio, findHowManyPayWithoutDiferences }: Props) {
+export default function Step3({
+  listOfParticipants,
+  nomeRateio,
+  findHowManyPayWithoutDiferences,
+}: Props) {
   const [typesOfExpenses, setTypesOfExpenses] = useState([]);
   const [names, setNames] = useState([]);
 
@@ -52,27 +61,22 @@ export default function Step3({ listOfParticipants, nomeRateio, findHowManyPayWi
       []
     );
 
-    console.log(participantsShare);
+    const data = JSON.stringify({
+      listOfParticipants: listOfParticipants,
+      participantsShare: participantsShare,
+      nomeRateio: nomeRateio,
+    });
 
-    const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-      <circle
-        cx="50"
-        cy="50"
-        r="40"
-        stroke="green"
-        stroke-width="4"
-        fill="yellow"
-      />
-    </svg>`;
+    var pakoDeflated = pako.deflate(data);
+
+    const pakoEncoded64 = encodeBase64(pakoDeflated);
+
+    console.log("pako base64", pakoEncoded64, pakoEncoded64.length);
 
     router.push({
       pathname: "/resultado",
       query: {
-        listOfParticipants: JSON.stringify(listOfParticipants),
-        participantsShare: JSON.stringify(participantsShare),
-        nomeRateio: nomeRateio,
-        svg: svg,
+        result: pakoEncoded64,
       },
     });
   }
@@ -118,7 +122,12 @@ export default function Step3({ listOfParticipants, nomeRateio, findHowManyPayWi
                 </strong>
                 {names.map((name: string) => (
                   <div className="flex items-center" key={name}>
-                    <SwitchButton name={`${expenseName}-${name}`} findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}/>
+                    <SwitchButton
+                      name={`${expenseName}-${name}`}
+                      findHowManyPayWithoutDiferences={
+                        findHowManyPayWithoutDiferences
+                      }
+                    />
                     <label className="ml-3 min-w-0 flex-1 text-theme-4 capitalize">
                       {name}
                     </label>

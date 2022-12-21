@@ -5,6 +5,7 @@ import ModalEdit from "./ModalEdit/ModalEdit";
 import PopoverFoods from "../PopoverFoods/PopoverFoods";
 import { ListOfParticipants } from "../../Types/global";
 import Image from "next/image";
+import { PhotoUploader } from "../PhotoUploader/PhotoUploader";
 
 interface Props {
   formRef: any;
@@ -22,6 +23,7 @@ export default function Step2({
   const [isOpenModal, setIsOpenModal] = useState(true);
   const [editablePerson, setEditablePerson] = useState<any>(null);
   const [icon, setIcon] = useState<any>(null);
+  const [thumbPhoto, setThumbPhoto] = useState<Uint8Array | null>(null);
 
   const nameRef = useRef<any>(null);
 
@@ -43,7 +45,7 @@ export default function Step2({
       return;
     }
 
-    const formPlusIcons = { ...dataForm, icon: icon };
+    const formPlusIcons = { ...dataForm, icon: icon, thumbPhoto: thumbPhoto };
 
     setListOfParticipants([...listOfParticipants, formPlusIcons]);
 
@@ -54,6 +56,7 @@ export default function Step2({
     setOpenEdit(false);
     setIcon(null);
     setOpenExpenses(false);
+    setThumbPhoto(null);
   }
 
   function handleEdit(params: ListOfParticipants) {
@@ -68,7 +71,6 @@ export default function Step2({
     setListOfParticipants([...newData]);
   }
 
-  console.log(listOfParticipants);
   return (
     <>
       <div className="my-10 bg-theme-5 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
@@ -97,6 +99,7 @@ export default function Step2({
                 required
                 ref={nameRef}
               ></input>
+              {/* <PhotoUploader setThumbPhoto={setThumbPhoto} /> */}
             </div>
             <button
               type="button"

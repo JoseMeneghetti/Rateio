@@ -1,11 +1,9 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GetServerSideProps } from "next";
 import CardResultado from "../components/Card/CardResultado";
 import Result from "../components/Result/Result";
+import pako from "pako";
+
 import {
   FindHowManyPayWithoutDiferences,
   ListForResult,
@@ -20,23 +18,25 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { PencilSimple, Share } from "phosphor-react";
 import useDeviceType from "../lib/hooks/useDeviceType";
+import { decodeBase64, encodeBase64 } from "../lib/utils/base64";
+
+type Result = {
+  result: Data;
+};
 
 type Data = {
   listOfParticipants: ListOfParticipants[] | any;
   participantsShare: string[] | any;
   nomeRateio: string;
-  svg?: any;
 };
 
 interface Props {
-  data: Data;
+  data: Result;
 }
 export default function Resultado({ data }: Props) {
-  const participantsShare: any = data.participantsShare;
-  const listOfParticipants = data.listOfParticipants;
-  const nomeRateio = data.nomeRateio;
-  const svg = data.svg;
-
+  const participantsShare = data.result.participantsShare;
+  const listOfParticipants = data.result.listOfParticipants;
+  const nomeRateio = data.result.nomeRateio;
   const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
     useState([]);
   const [onlyParticipants, setOnlyParticipants] = useState([]);
@@ -76,16 +76,22 @@ export default function Resultado({ data }: Props) {
   }
 
   function handleEditRateio() {
+    const newData = JSON.stringify({
+      listOfParticipants,
+      findHowManyPayWithoutDiferences,
+      nomeRateio,
+    });
+
+    const pakoDeflated = pako.deflate(newData);
+
+    const pakoEncoded64 = encodeBase64(pakoDeflated);
+
     router.push({
       pathname: "/",
-      query: {
-        listOfParticipants: JSON.stringify(listOfParticipants),
-        findHowManyPayWithoutDiferences: JSON.stringify(findHowManyPayWithoutDiferences),
-        nomeRateio: nomeRateio,
-      },
+      query: { result: pakoEncoded64 },
     });
   }
-  console.log(findHowManyPayWithoutDiferences,'findHowManyPayWithoutDiferences')
+
   useEffect(() => {
     if (listOfParticipants.length && participantsShare.length) {
       const findHowManyPayWithoutDiferences = participantsShare.reduce(
@@ -261,7 +267,6 @@ export default function Resultado({ data }: Props) {
   }, [listOfParticipants, participantsShare]);
 
   useEffect(() => {
-    console.log(device);
     if (device) {
       if (device !== "Phone") {
         setFade(true);
@@ -353,16 +358,15 @@ export default function Resultado({ data }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (
+export const getServerSideProps: GetServerSideProps<{ data: Result }> = async (
   context
 ) => {
   // Fetch data from external API
 
   const data = {
-    listOfParticipants: JSON.parse(context.query.listOfParticipants as string),
-    participantsShare: JSON.parse(context.query.participantsShare as string),
-    nomeRateio: context.query.nomeRateio as string,
-    svg: context.query.svg ?? null,
+    result: JSON.parse(
+      pako.inflate(decodeBase64(context.query.result), { to: "string" })
+    ),
   };
   // Pass data to the page via props
 
