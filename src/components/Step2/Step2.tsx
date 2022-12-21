@@ -94,7 +94,7 @@ export default function Step2({
               <input
                 id="participant"
                 name="participant"
-                placeholder="Nome"
+                placeholder="Nome do Participante"
                 className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full"
                 required
                 ref={nameRef}
