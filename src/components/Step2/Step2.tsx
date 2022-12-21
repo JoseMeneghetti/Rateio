@@ -89,7 +89,7 @@ export default function Step2({
           >
             <div className="flex flex-col w-full">
               <span className="text-center lg:text-xl mb-2 text-theme-4">
-                Adicione um novo participante
+                Adicione um novo custo
               </span>
               <input
                 id="participant"
