@@ -92,10 +92,13 @@ export default function Resultado({ data }: Props) {
     });
   }
 
+  console.log(participantsShare)
   useEffect(() => {
     if (listOfParticipants.length && participantsShare.length) {
+
       const findHowManyPayWithoutDiferences = participantsShare.reduce(
         (total: any, currentElement: ParticipantsShare) => {
+
           const findWhoPaid = listOfParticipants.find(
             (participants: ListOfParticipants) =>
               participants.description === currentElement.expenseName
@@ -119,6 +122,8 @@ export default function Resultado({ data }: Props) {
         },
         []
       );
+
+      console.log(findHowManyPayWithoutDiferences)
 
       const listForResult = listOfParticipants.reduce(
         (total: any, participant: ListOfParticipants) => {

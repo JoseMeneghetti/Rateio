@@ -6,6 +6,8 @@ import PopoverFoods from "../PopoverFoods/PopoverFoods";
 import { ListOfParticipants } from "../../Types/global";
 import Image from "next/image";
 import { PhotoUploader } from "../PhotoUploader/PhotoUploader";
+import CardStep2 from "./CardStep2/CardStep2";
+import uuid from "react-uuid";
 
 interface Props {
   formRef: any;
@@ -45,7 +47,12 @@ export default function Step2({
       return;
     }
 
-    const formPlusIcons = { ...dataForm, icon: icon, thumbPhoto: thumbPhoto };
+    const formPlusIcons = {
+      id: uuid(),
+      ...dataForm,
+      icon: icon,
+      thumbPhoto: thumbPhoto,
+    };
 
     setListOfParticipants([...listOfParticipants, formPlusIcons]);
 
@@ -59,14 +66,17 @@ export default function Step2({
     setThumbPhoto(null);
   }
 
-  function handleEdit(params: ListOfParticipants) {
+  function handleEdit(id: string) {
+    const find = listOfParticipants.find((el) => el.id === id);
     setIsOpenModal(true);
-    setEditablePerson(params);
+    setEditablePerson(structuredClone(find));
   }
 
-  function handleDelete(params: ListOfParticipants) {
+  function handleDelete(id: string) {
+    const find = listOfParticipants.find((el) => el.id === id);
+    console.log(find);
     const newData = listOfParticipants.filter(
-      (el: ListOfParticipants) => el.participant !== params.participant
+      (el: ListOfParticipants) => el.id !== find?.id
     );
     setListOfParticipants([...newData]);
   }
@@ -89,7 +99,7 @@ export default function Step2({
           >
             <div className="flex flex-col w-full">
               <span className="text-center lg:text-xl mb-2 text-theme-4">
-                Adicione um novo custo
+                Adicione um novo participante
               </span>
               <input
                 id="participant"
@@ -103,7 +113,8 @@ export default function Step2({
             </div>
             <button
               type="button"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (nameRef?.current?.value !== "") {
                   setOpenExpenses(true);
                 }
@@ -175,82 +186,19 @@ export default function Step2({
         </form>
       </div>
 
-      <div className="my-1 rounded-lg p-1 gap-2 w-full flex flex-row flex-wrap justify-center items-center">
-        {listOfParticipants.map((participant: ListOfParticipants) => (
-          <div
-            className="bg-theme-5 rounded-xl flex flex-row justify-center p-3 lg:max-w-[390px] lg:w-[390px] min-h-[116px] w-full pl-0"
-            key={participant.participant}
-          >
-            <div className="flex items-center w-2/6 flex-col justify-center">
-              <p className="w-12 h-12 flex border-2 border-black rounded-full items-center justify-center text-2xl text-theme-4">
-                {participant.participant &&
-                  participant.participant[0]?.toUpperCase()}
-              </p>
-              <span className="px-1 lg:text-lg w-full font-bold text-center break-words capitalize text-theme-4">
-                {participant.participant}
-              </span>
-            </div>
+      <CardStep2
+        listOfParticipants={listOfParticipants}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        setListOfParticipants={setListOfParticipants}
+      />
 
-            <div className="flex flex-col gap-4 w-3/6 justify-center">
-              <div className="flex items-center">
-                <>
-                  <label className="w-full text-theme-4">Gastou em:</label>
-                  <span className="px-1 capitalize lg:text-lg w-full font-bold break-words text-theme-4">
-                    {participant.description !== "" ? (
-                      participant.description
-                    ) : (
-                      <Minus
-                        size={24}
-                        weight="bold"
-                        className="text-center text-theme-4"
-                      />
-                    )}
-                  </span>
-                </>
-              </div>
-              <div className="flex items-center">
-                <label className="w-full text-theme-4">Quanto Gastou:</label>
-                <span className="px-1 lg:text-lg w-full font-bold break-words text-theme-4">
-                  {participant.expenses ? `R$ ${participant.expenses}` : "R$ 0"}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-5 w-1/6">
-              {participant.icon && (
-                <div>
-                  <Image
-                    src={`/food/${participant.icon}.png`}
-                    width={50}
-                    height={50}
-                    alt={""}
-                  />
-                </div>
-              )}
-              <div className="flex flex-row justify-between w-full">
-                <PencilSimple
-                  size={24}
-                  className="cursor-pointer"
-                  onClick={() => handleEdit(participant)}
-                />
-                <Trash
-                  size={24}
-                  className="cursor-pointer"
-                  onClick={() => handleDelete(participant)}
-                />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
       <ModalEdit
         isOpenModal={isOpenModal}
         setIsOpenModal={setIsOpenModal}
         editablePerson={editablePerson}
         setListOfParticipants={setListOfParticipants}
         listOfParticipants={listOfParticipants}
-        setIcon={setIcon}
-        icon={icon}
       />
     </>
   );

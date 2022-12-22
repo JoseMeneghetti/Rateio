@@ -1,4 +1,5 @@
 export interface ListOfParticipants {
+  id: string;
   description: string;
   expenses: string | number;
   icon: string | null;
@@ -55,4 +56,17 @@ export interface Receives {
 export interface Pays {
   pays?: string;
   payValue?: number;
+}
+
+export interface ListCard {
+  name: string;
+  expenseCard: ExpenseCard[];
+}
+
+export interface ExpenseCard {
+  id: string;
+  description: string;
+  expenses: string | number;
+  icon: string | null;
+  thumbPhoto?: Uint8Array;
 }

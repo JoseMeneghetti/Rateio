@@ -1,23 +1,24 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusCircle, X } from "phosphor-react";
-import { FormEvent, Fragment, useEffect, useState } from "react";
+import { FormEvent, Fragment, useState } from "react";
+import uuid from "react-uuid";
 import { ListOfParticipants } from "../../../Types/global";
 import PopoverFoods from "../../PopoverFoods/PopoverFoods";
 
 interface Props {
-  setIsOpenModal: any;
-  isOpenModal: boolean;
-  editablePerson: ListOfParticipants | any;
+  isOpenModalAdd: boolean;
+  setisOpenModalAdd: any;
   setListOfParticipants: any;
   listOfParticipants: ListOfParticipants[];
+  selectedParticipant: any;
 }
 
-export default function ModalEdit({
-  setIsOpenModal,
-  isOpenModal,
-  editablePerson,
+export default function ModalAddExpense({
+  setisOpenModalAdd,
+  isOpenModalAdd,
   setListOfParticipants,
   listOfParticipants,
+  selectedParticipant,
 }: Props) {
   const [icon, setIcon] = useState<any>(null);
 
@@ -28,44 +29,55 @@ export default function ModalEdit({
 
     const dataForm = Object.fromEntries(form);
 
+    const duplicated =
+      dataForm.description !== "" &&
+      listOfParticipants.find(
+        (list: ListOfParticipants) => list.description === dataForm.description
+      );
+
+    if (duplicated) {
+      alert("Tipo de gasto ja cadastrado");
+      return;
+    }
+
     const newData = listOfParticipants.filter(
-      (el: ListOfParticipants) => el.id !== editablePerson.id
+      (el: ListOfParticipants) => el.id !== selectedParticipant.id
     );
 
-    const EditedData = {
-      description: dataForm.description,
-      expenses: dataForm.expenses,
+    //filter to remove expense 0
+    const newDatafiltered = newData.filter((el) => {
+      if (selectedParticipant.name === el.participant) {
+        if (el.expenses > 0) return el;
+      } else {
+        return el;
+      }
+    });
+
+    const formPlusIconsAndName = {
+      id: uuid(),
+      participant: selectedParticipant.name,
+      ...dataForm,
       icon: icon,
-      id: editablePerson.id,
-      participant: editablePerson.participant,
-      thumbPhoto: editablePerson.thumbPhoto,
     };
 
-    setListOfParticipants([...newData, EditedData]);
+    setListOfParticipants([...newDatafiltered, formPlusIconsAndName]);
 
-    setIsOpenModal(false);
+    setisOpenModalAdd(false);
     setIcon(null);
   }
 
-  console.log(editablePerson);
-  useEffect(() => {
-    if (editablePerson?.icon) {
-      setIcon(editablePerson?.icon);
-    }
-  }, [editablePerson]);
-
-  if (!editablePerson) {
+  if (!selectedParticipant) {
     return <></>;
   }
 
   return (
-    <Transition appear show={isOpenModal} as={Fragment}>
+    <Transition appear show={isOpenModalAdd} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
-        open={isOpenModal}
+        open={isOpenModalAdd}
         onClose={() => {
-          setIsOpenModal(false);
+          setisOpenModalAdd(false);
           setIcon(null);
         }}
       >
@@ -101,7 +113,7 @@ export default function ModalEdit({
                   size={20}
                   weight={"bold"}
                   onClick={() => {
-                    setIsOpenModal(false);
+                    setisOpenModalAdd(false);
                     setIcon(null);
                   }}
                 />
@@ -115,7 +127,6 @@ export default function ModalEdit({
                     placeholder="Nome do gasto"
                     className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
                     required
-                    defaultValue={editablePerson.description}
                   ></input>
                   <label className="text-theme-4">Quanto?</label>
                   <input
@@ -125,7 +136,6 @@ export default function ModalEdit({
                     type="number"
                     className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-full "
                     required
-                    defaultValue={editablePerson.expenses}
                   ></input>
                   <PopoverFoods setIcon={setIcon} icon={icon} />
                   <button
