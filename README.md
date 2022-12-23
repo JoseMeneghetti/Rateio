@@ -24,9 +24,9 @@ If this person paid something add the description of the expense and how much it
 
 ![](https://snipboard.io/EavptY.jpg)
 
-You can edit or delete the people from the list. If you don't need, move to the next step.
+You can edit or delete expenses and add more expenses for each people. If you don't need, move to the next step.
 
-![](https://snipboard.io/ZMn5oW.jpg)
+![](https://snipboard.io/ozh9TZ.jpg)
 ### Second Step 
 
 Choose who participates in the expenses, and move to the result.

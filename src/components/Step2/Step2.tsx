@@ -74,7 +74,6 @@ export default function Step2({
 
   function handleDelete(id: string) {
     const find = listOfParticipants.find((el) => el.id === id);
-    console.log(find);
     const newData = listOfParticipants.filter(
       (el: ListOfParticipants) => el.id !== find?.id
     );
