@@ -1,6 +1,7 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "../components/Footer";
 
 export default function Document() {
   return (
@@ -34,6 +35,7 @@ export default function Document() {
         <Main />
         <NextScript />
       </body>
+      <Footer/>
     </Html>
   );
 }
