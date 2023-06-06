@@ -23,6 +23,7 @@ import PasswordModal from "../components/Modal/PasswordModal";
 import DialogModal from "../components/Modal/DialogModal";
 import NewPasswordModal from "../components/Modal/NewPasswordModal";
 import PasswordModalEdit from "../components/Modal/PasswordModalEdit";
+import Spinner from "../components/Spinner/Spinner";
 
 type Result = {
   result: Data;
@@ -43,6 +44,7 @@ interface Props {
 
 export default function Resultado({ data, isView }: Props) {
   const [newData, setNewData] = useState<Data | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
     useState([]);
@@ -98,6 +100,8 @@ export default function Resultado({ data, isView }: Props) {
   }, [isView]);
 
   function handleEditRateio() {
+    setLoading(true);
+
     localStorage.setItem(
       "listOfParticipants",
       JSON.stringify(newData?.listOfParticipants)
@@ -110,9 +114,13 @@ export default function Resultado({ data, isView }: Props) {
     localStorage.setItem("rateio-id", newData?.id?.toString() ?? "");
 
     router.push("/");
+
+    setLoading(false);
   }
 
   function handleSaveRateio(password: string) {
+    setLoading(true);
+
     const saveData = JSON.stringify({
       listOfParticipants: newData?.listOfParticipants,
       participantsShare: newData?.participantsShare,
@@ -140,9 +148,12 @@ export default function Resultado({ data, isView }: Props) {
       });
 
     setIsOpenPasswordEdit(false);
+    setLoading(false);
   }
 
   function handleCreateRateio(newPassword: string) {
+    setLoading(true);
+
     const createData = JSON.stringify({
       listOfParticipants: newData?.listOfParticipants,
       participantsShare: newData?.participantsShare,
@@ -171,9 +182,11 @@ export default function Resultado({ data, isView }: Props) {
           }));
         }
       });
+
+    setLoading(false);
   }
 
-  console.log(newData)
+  console.log(newData);
   useEffect(() => {
     if (
       newData?.listOfParticipants.length &&
@@ -382,9 +395,19 @@ export default function Resultado({ data, isView }: Props) {
         isOpen={isOpenPassword}
         setIsOpen={setIsOpenPassword}
         id={newData.id}
+        setLoading={setLoading}
       />
     );
   }
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
+        <Spinner customClass="fill-black" size="h-20 w-20" />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center">
       <div className="flex flex-col items-center justify-center gap-4">

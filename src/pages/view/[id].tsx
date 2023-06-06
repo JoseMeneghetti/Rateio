@@ -3,13 +3,30 @@ import Resultado from "../resultado";
 import { decodeBase64 } from "../../lib/utils/base64";
 import pako from "pako";
 import SearchModal from "../../components/Modal/SearchModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { House, MagnifyingGlass } from "phosphor-react";
 import { useRouter } from "next/router";
+import Spinner from "../../components/Spinner/Spinner";
 
 export const ViewPage = ({ data }: any) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (!data && loading) {
+      setLoading(false);
+    }
+  }, [data, loading]);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
+        <Spinner customClass="fill-black" size="h-20 w-20" />
+      </div>
+    );
+  }
 
   if (!data) {
     return (
@@ -31,7 +48,11 @@ export const ViewPage = ({ data }: any) => {
             <MagnifyingGlass size={24} weight="bold" />
           </button>
         </div>
-        <SearchModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        <SearchModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setLoading={setLoading}
+        />
       </div>
     );
   }

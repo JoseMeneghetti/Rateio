@@ -7,16 +7,18 @@ import { Fragment, useState } from "react";
 interface Props {
   isOpen: boolean;
   setIsOpen(value: boolean): void;
+  setLoading(value: boolean): void;
 }
-const SearchModal = ({ isOpen, setIsOpen }: Props) => {
-
+const SearchModal = ({ isOpen, setIsOpen, setLoading }: Props) => {
   const [id, setId] = useState("");
   const router = useRouter();
+
   function closeModal() {
     setIsOpen(false);
   }
 
   const handleSearch = async () => {
+    setLoading(true);
     router.push(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/view/${id}`);
   };
 

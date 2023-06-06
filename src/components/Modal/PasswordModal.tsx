@@ -6,13 +6,16 @@ interface Props {
   isOpen: boolean;
   setIsOpen(value: boolean): void;
   id: number | null;
+  setLoading(value: boolean): void;
 }
 
-const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
+const PasswordModal = ({ isOpen, setIsOpen, id,setLoading }: Props) => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
 
   const handleCheckPassword = () => {
+    setLoading(true);
+    
     axios
       .post("/api/password", {
         id: id,
@@ -26,6 +29,8 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
           setIsOpen(false);
         }
       });
+
+      setLoading(false);
   };
 
   return (

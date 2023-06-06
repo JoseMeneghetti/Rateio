@@ -17,6 +17,7 @@ import {
 } from "../Types/global";
 import SearchModal from "../components/Modal/SearchModal";
 import { useRouter } from "next/router";
+import Spinner from "../components/Spinner/Spinner";
 
 type Result = {
   result: Data;
@@ -34,6 +35,7 @@ type Data = {
 
 export default function Home({ data }: Props) {
   const [nomeRateio, setnomeRateio] = useState("");
+  const [loading, setLoading] = useState(false);
   const [listOfParticipants, setListOfParticipants] = useState<
     ListOfParticipants[]
   >([]);
@@ -56,7 +58,7 @@ export default function Home({ data }: Props) {
     setFindHowManyPayWithoutDiferences([]);
     setnomeRateio("");
     setStep2(false);
-    setId(null)
+    setId(null);
   }, []);
 
   //control persistence
@@ -94,6 +96,14 @@ export default function Home({ data }: Props) {
       localStorage.setItem("nomeRateio", nomeRateio.toString());
     }
   }, [nomeRateio]);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
+        <Spinner customClass="fill-black" size="h-20 w-20" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -178,7 +188,11 @@ export default function Home({ data }: Props) {
           />
         )}
       </div>
-      <SearchModal setIsOpen={setIsOpen} isOpen={isOpen} />
+      <SearchModal
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        setLoading={setLoading}
+      />
     </>
   );
 }
