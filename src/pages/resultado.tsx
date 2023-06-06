@@ -389,6 +389,15 @@ export default function Resultado({ data, isView }: Props) {
   //   </div>
   // );
 
+  
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
+        <Spinner customClass="fill-black" size="h-20 w-20" />
+      </div>
+    );
+  }
+
   if (isOpenPassword) {
     return (
       <PasswordModal
@@ -397,14 +406,6 @@ export default function Resultado({ data, isView }: Props) {
         id={newData.id}
         setLoading={setLoading}
       />
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
-        <Spinner customClass="fill-black" size="h-20 w-20" />
-      </div>
     );
   }
 
