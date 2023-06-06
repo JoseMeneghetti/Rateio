@@ -19,8 +19,6 @@ export function PhotoUploader({ setThumbPhoto }: Props) {
     setImages(imageList as never[]);
   };
 
-  console.log(images, "bb");
-
   useEffect(() => {
     if (images[0]?.dataURL) {
       resizeImage(images[0]?.dataURL).then((result) => {

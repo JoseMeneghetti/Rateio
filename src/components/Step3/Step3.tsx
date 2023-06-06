@@ -60,7 +60,12 @@ export default function Step3({
       },
       []
     );
-
+      
+    localStorage.setItem(
+      "participantsShare",
+      JSON.stringify(participantsShare)
+    );
+    
     const data = JSON.stringify({
       listOfParticipants: listOfParticipants,
       participantsShare: participantsShare,
@@ -71,12 +76,15 @@ export default function Step3({
 
     const pakoEncoded64 = encodeBase64(pakoDeflated);
 
-    console.log("pako base64", pakoEncoded64, pakoEncoded64.length);
+    const savedID = localStorage.getItem("rateio-id");
+
+    localStorage.removeItem("rateio-id");
 
     router.push({
       pathname: "/resultado",
       query: {
         result: pakoEncoded64,
+        id: savedID ?? null
       },
     });
   }
@@ -102,7 +110,7 @@ export default function Step3({
       )
     );
   }, [listOfParticipants]);
-
+  
   return (
     <form
       className="my-10 w-5/6 h-fit rounded-lg p-5"

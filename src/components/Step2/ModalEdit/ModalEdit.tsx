@@ -47,7 +47,6 @@ export default function ModalEdit({
     setIcon(null);
   }
 
-  console.log(editablePerson);
   useEffect(() => {
     if (editablePerson?.icon) {
       setIcon(editablePerson?.icon);

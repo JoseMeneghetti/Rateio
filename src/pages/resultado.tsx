@@ -16,15 +16,21 @@ import {
 import Sugestion from "../components/Result/Sugestion";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { PencilSimple, Share } from "phosphor-react";
+import { FloppyDisk, PencilSimple, Share } from "phosphor-react";
 import useDeviceType from "../lib/hooks/useDeviceType";
 import { decodeBase64, encodeBase64 } from "../lib/utils/base64";
+import PasswordModal from "../components/Modal/PasswordModal";
+import DialogModal from "../components/Modal/DialogModal";
+import NewPasswordModal from "../components/Modal/NewPasswordModal";
 
 type Result = {
   result: Data;
+  id: number | null;
 };
 
 type Data = {
+  id: number | null;
+  password: string;
   listOfParticipants: ListOfParticipants[] | any;
   participantsShare: string[] | any;
   nomeRateio: string;
@@ -32,11 +38,12 @@ type Data = {
 
 interface Props {
   data: Result;
+  isView: boolean;
 }
-export default function Resultado({ data }: Props) {
-  const participantsShare = data.result.participantsShare;
-  const listOfParticipants = data.result.listOfParticipants;
-  const nomeRateio = data.result.nomeRateio;
+
+export default function Resultado({ data, isView }: Props) {
+  const [newData, setNewData] = useState<Data | null>(null);
+
   const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
     useState([]);
   const [onlyParticipants, setOnlyParticipants] = useState([]);
@@ -45,60 +52,128 @@ export default function Resultado({ data }: Props) {
   const [listForResult, setListForResult] = useState<ListForResult | any>([]);
   const [sugestionList, setSugestionList] = useState<any>([]);
   const [shortURL, setShortURL] = useState("");
+  const [shortError, setShortError] = useState("");
+  const [insertedPassword, setInsertedPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
   const [fade, setFade] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDialogModal, setIsOpenDialogModal] = useState(false);
+  const [isOpenNewPassword, setIsOpenNewPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const tableRef = useRef<any>(null);
   const device = useDeviceType();
   const router = useRouter();
-
+  const [newPassword, setNewPassword] = useState("");
   async function GerarLink() {
-    const ref = window.location.href;
-
-    let headersList = {
-      accept: "application/json",
-      "Content-Type": "application/json",
-      authorization: process.env.NEXT_PUBLIC_API_SHORT_IO,
-    };
-
-    let bodyContent = JSON.stringify({
-      originalURL: `${ref}`,
-      domain: "5ve5.short.gy",
-    });
-
-    let reqOptions = {
-      url: "https://api.short.cm/links/public",
-      method: "POST",
-      headers: headersList,
-      data: bodyContent,
-    };
-
-    let response = await axios.request(reqOptions);
-    setShortURL(response.data.shortURL);
-  }
-
-  function handleEditRateio() {
-    const newData = JSON.stringify({
-      listOfParticipants,
-      findHowManyPayWithoutDiferences,
-      nomeRateio,
-    });
-
-    const pakoDeflated = pako.deflate(newData);
-
-    const pakoEncoded64 = encodeBase64(pakoDeflated);
-
-    router.push({
-      pathname: "/",
-      query: { result: pakoEncoded64 },
-    });
+    if (newData?.id) {
+      const ref = `https://rateio.vercel.app/view/${newData?.id}`;
+      navigator.clipboard.writeText(ref);
+      setShortURL(ref);
+    } else {
+      setShortError("Salve seu Rateio para compartilhar!");
+      setTimeout(() => setShortError(""), 3000);
+    }
   }
 
   useEffect(() => {
-    if (listOfParticipants.length && participantsShare.length) {
+    setNewData({
+      id: data?.id ?? null,
+      password: data?.result.password,
+      listOfParticipants: data?.result.listOfParticipants,
+      participantsShare: data?.result.participantsShare,
+      nomeRateio: data?.result.nomeRateio,
+    });
+  }, []);
 
-      const findHowManyPayWithoutDiferences = participantsShare.reduce(
+  useEffect(() => {
+    if (isView && newData?.password !== insertedPassword) {
+      if (isOpen) {
+        setErrorMsg(true);
+        setTimeout(() => setErrorMsg(false), 3000);
+      }
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [insertedPassword, isView, newData?.password]);
+
+  function handleEditRateio() {
+    localStorage.setItem(
+      "listOfParticipants",
+      JSON.stringify(newData?.listOfParticipants)
+    );
+    localStorage.setItem("nomeRateio", newData?.nomeRateio ?? "");
+    localStorage.setItem(
+      "findHowManyPayWithoutDiferences",
+      JSON.stringify(findHowManyPayWithoutDiferences)
+    );
+    localStorage.setItem("rateio-id", newData?.id?.toString() ?? "");
+
+    router.push("/");
+  }
+
+  function handleSaveRateio() {
+    const saveData = JSON.stringify({
+      password: "a",
+      listOfParticipants: newData?.listOfParticipants,
+      participantsShare: newData?.participantsShare,
+      nomeRateio: newData?.nomeRateio,
+    });
+
+    const pakoDeflated = pako.deflate(saveData);
+
+    const pakoEncoded64 = encodeBase64(pakoDeflated);
+
+    axios
+      .post(`/api/edit`, {
+        id: newData?.id,
+        rateio: pakoEncoded64,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setErrorMessage("Rateio Salvo com sucesso!");
+          setIsOpenDialogModal(true);
+        }
+      });
+  }
+
+  function handleCreateRateio() {
+    const createData = JSON.stringify({
+      password: newPassword,
+      listOfParticipants: newData?.listOfParticipants,
+      participantsShare: newData?.participantsShare,
+      nomeRateio: newData?.nomeRateio,
+    });
+
+    const pakoDeflated = pako.deflate(createData);
+
+    const pakoEncoded64 = encodeBase64(pakoDeflated);
+
+    axios
+      .post("/api/create", {
+        rateio: pakoEncoded64,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setErrorMessage("Rateio Criado com sucesso!");
+          setIsOpenDialogModal(true);
+          setIsOpenNewPassword(false);
+          setNewData((old: any) => ({
+            ...old,
+            id: response.data.productResult.id,
+          }));
+        }
+      });
+  }
+
+  useEffect(() => {
+    if (
+      newData?.listOfParticipants.length &&
+      newData?.participantsShare.length
+    ) {
+      const findHowManyPayWithoutDiferences = newData?.participantsShare.reduce(
         (total: any, currentElement: ParticipantsShare) => {
-
-          const findWhoPaid = listOfParticipants.find(
+          const findWhoPaid = newData?.listOfParticipants.find(
             (participants: ListOfParticipants) =>
               participants.description === currentElement.expenseName
           );
@@ -122,7 +197,7 @@ export default function Resultado({ data }: Props) {
         []
       );
 
-      const listForResult = listOfParticipants.reduce(
+      const listForResult = newData?.listOfParticipants.reduce(
         (total: any, participant: ListOfParticipants) => {
           if (
             total.find((el: any) => el.participant === participant.participant)
@@ -258,6 +333,12 @@ export default function Resultado({ data }: Props) {
         []
       );
 
+      //control persistence
+      localStorage.setItem(
+        "findHowManyPayWithoutDiferences",
+        JSON.stringify(findHowManyPayWithoutDiferences)
+      );
+
       findHowManyPayWithoutDiferences &&
         setFindHowManyPayWithoutDiferences(findHowManyPayWithoutDiferences);
       onlyParticipants && setOnlyParticipants(onlyParticipants);
@@ -266,7 +347,7 @@ export default function Resultado({ data }: Props) {
       total && setTotal(total);
       sugestion && setSugestionList(sugestion);
     }
-  }, [listOfParticipants, participantsShare]);
+  }, [newData?.listOfParticipants, newData?.participantsShare]);
 
   useEffect(() => {
     if (device) {
@@ -276,7 +357,7 @@ export default function Resultado({ data }: Props) {
     }
   }, [device]);
 
-  if (!listOfParticipants || !participantsShare) {
+  if (!newData?.listOfParticipants || !newData?.participantsShare) {
     return <div> Ocorreu um erro...</div>;
   }
 
@@ -287,13 +368,22 @@ export default function Resultado({ data }: Props) {
   //   </div>
   // );
 
+  if (isOpen) {
+    return (
+      <PasswordModal
+        isOpen={isOpen}
+        setInsertedPassword={setInsertedPassword}
+        errorMsg={errorMsg}
+      />
+    );
+  }
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-white">{nomeRateio}</h1>
+      <h1 className="text-4xl font-bold text-white">{newData?.nomeRateio}</h1>
       <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
         <CardResultado
           findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
-          listOfParticipants={listOfParticipants}
+          listOfParticipants={newData?.listOfParticipants}
         />
       </div>
       <div
@@ -315,7 +405,7 @@ export default function Resultado({ data }: Props) {
       >
         <Result
           total={total}
-          listOfParticipants={listOfParticipants}
+          listOfParticipants={newData?.listOfParticipants}
           findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
           listForResult={listForResult}
         />
@@ -330,7 +420,7 @@ export default function Resultado({ data }: Props) {
         {shortURL && (
           <div className="flex flex-row items-center justify-center gap-4">
             <label className="font-bold text-white my-4">
-              Compartilhe o Link do seu Rateio:{" "}
+              Link Copiado com sucesso:{" "}
             </label>
             <input
               className="bg-theme-4 py-2 px-4 rounded placeholder:text-black w-fit "
@@ -339,13 +429,37 @@ export default function Resultado({ data }: Props) {
             ></input>
           </div>
         )}
-        <button
-          className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
-          onClick={() => handleEditRateio()}
-        >
-          Editar
-          <PencilSimple size={24} weight="bold" />
-        </button>
+        {shortError && (
+          <div className="flex flex-row items-center justify-center gap-4">
+            <label className="font-bold my-4 text-red-700">{shortError}</label>
+          </div>
+        )}
+        {!isView && !newData.id ? (
+          <button
+            className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
+            onClick={() => setIsOpenNewPassword(true)}
+          >
+            Criar novo Rateio
+            <PencilSimple size={24} weight="bold" />
+          </button>
+        ) : (
+          <div className="flex gap-4">
+            <button
+              className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
+              onClick={() => handleEditRateio()}
+            >
+              Editar
+              <PencilSimple size={24} weight="bold" />
+            </button>
+            <button
+              className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
+              onClick={() => handleSaveRateio()}
+            >
+              Salvar
+              <FloppyDisk size={24} weight="bold" />
+            </button>
+          </div>
+        )}
         <button
           className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
           onClick={() => GerarLink()}
@@ -356,6 +470,16 @@ export default function Resultado({ data }: Props) {
       </div>
       {/* to do profile img */}
       {/* <Image /> */}
+      <DialogModal
+        setIsOpen={setIsOpenDialogModal}
+        isOpen={isOpenDialogModal}
+        message={errorMessage}
+      />
+      <NewPasswordModal
+        isOpen={isOpenNewPassword}
+        setInsertedPassword={setNewPassword}
+        handleCreateRateio={handleCreateRateio}
+      />
     </div>
   );
 }
@@ -364,11 +488,19 @@ export const getServerSideProps: GetServerSideProps<{ data: Result }> = async (
   context
 ) => {
   // Fetch data from external API
+  let result = null;
+
+  if (typeof context.query.id === "string") {
+    // Use a string
+    result = parseInt(context.query.id);
+    // Resto do código
+  }
 
   const data = {
     result: JSON.parse(
       pako.inflate(decodeBase64(context.query.result), { to: "string" })
     ),
+    id: result,
   };
   // Pass data to the page via props
 

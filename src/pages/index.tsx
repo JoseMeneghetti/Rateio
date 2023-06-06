@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import { ArrowFatLineRight } from "phosphor-react";
-import { useEffect, useRef, useState } from "react";
+import { ArrowFatLineRight, ArrowsClockwise, MagnifyingGlass, PlusCircle } from "phosphor-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Step2 from "../components/Step2/Step2";
 import Step3 from "../components/Step3/Step3";
 import { decodeBase64 } from "../lib/utils/base64";
@@ -10,6 +10,8 @@ import {
   FindHowManyPayWithoutDiferences,
   ListOfParticipants,
 } from "../Types/global";
+import SearchModal from "../components/Modal/SearchModal";
+import { useRouter } from "next/router";
 
 type Result = {
   result: Data;
@@ -19,13 +21,13 @@ interface Props {
 }
 
 type Data = {
+  id: number;
   listOfParticipants: ListOfParticipants[];
   findHowManyPayWithoutDiferences: FindHowManyPayWithoutDiferences[];
   nomeRateio: string | any;
 };
 
 export default function Home({ data }: Props) {
-  console.log(data);
   const [nomeRateio, setnomeRateio] = useState("");
   const [listOfParticipants, setListOfParticipants] = useState<
     ListOfParticipants[]
@@ -34,28 +36,74 @@ export default function Home({ data }: Props) {
     useState<FindHowManyPayWithoutDiferences[]>([]);
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const formRef = useRef<any>(null);
+  const router = useRouter();
 
+  const handleReset = useCallback(() => {
+    localStorage.removeItem("listOfParticipants");
+    localStorage.removeItem("nomeRateio");
+    localStorage.removeItem("findHowManyPayWithoutDiferences");
+    setListOfParticipants([]);
+
+    setFindHowManyPayWithoutDiferences([]);
+    setnomeRateio("");
+    setStep2(false);
+  }, []);
+
+  //control persistence
   useEffect(() => {
-    if (
-      data?.result?.listOfParticipants &&
-      data?.result?.nomeRateio &&
-      data?.result?.findHowManyPayWithoutDiferences
-    ) {
-      setListOfParticipants(data.result.listOfParticipants);
-      setFindHowManyPayWithoutDiferences(
-        data.result.findHowManyPayWithoutDiferences
-      );
-      setnomeRateio(data.result.nomeRateio);
+    const savedParticipants = localStorage.getItem("listOfParticipants");
+    const savedNome = localStorage.getItem("nomeRateio");
+    const savedDiferences = localStorage.getItem(
+      "findHowManyPayWithoutDiferences"
+    );
+
+    if (savedParticipants || savedNome || savedDiferences) {
+      savedParticipants && setListOfParticipants(JSON.parse(savedParticipants));
+      savedDiferences &&
+        setFindHowManyPayWithoutDiferences(JSON.parse(savedDiferences));
+      savedNome && setnomeRateio(savedNome);
       setStep2(true);
     }
   }, []);
 
+  useEffect(() => {
+    if (listOfParticipants.length > 0) {
+      localStorage.setItem(
+        "listOfParticipants",
+        JSON.stringify(listOfParticipants)
+      );
+    }
+  }, [listOfParticipants]);
+
+  useEffect(() => {
+    if (nomeRateio.length > 0) {
+      localStorage.setItem("nomeRateio", nomeRateio.toString());
+    }
+  }, [nomeRateio]);
+
   return (
     <>
       <div className="max-w-[800px] mx-auto flex flex-col items-center">
-        <div>
+        <div className="flex flex-col gap-8 justify-center">
+          <div className="flex gap-8 justify-center">
+            <button
+              className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
+              onClick={() => handleReset()}
+            >
+              Resetar
+              <ArrowsClockwise size={24} weight="bold" />
+            </button>
+            <button
+              className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
+              onClick={() => setIsOpen(true)}
+            >
+              Buscar Rateio
+              <MagnifyingGlass size={24} weight="bold" />
+            </button>
+          </div>
           <h1 className="text-5xl text-center text-white">
             De um nome ao seu rateio
           </h1>
@@ -118,27 +166,7 @@ export default function Home({ data }: Props) {
           />
         )}
       </div>
+      <SearchModal setIsOpen={setIsOpen} isOpen={isOpen} />
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<{ data: Result }> = async (
-  context
-) => {
-  // Fetch data from external API
-
-  const data = {
-    result: context.query.result
-      ? JSON.parse(
-          pako.inflate(decodeBase64(context.query.result), { to: "string" })
-        )
-      : null,
-  };
-  // Pass data to the page via props
-
-  return {
-    props: {
-      data,
-    },
-  };
-};

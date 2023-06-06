@@ -63,9 +63,6 @@ export default function CardStep2({
     setListCard(listNew);
   }, [listOfParticipants]);
 
-  console.log(listCard);
-  console.log(listOfParticipants);
-
   return (
     <div className="w-full flex flex-row flex-wrap justify-center items-center gap-2">
       {listCard?.map((participant: ListCard) => (
