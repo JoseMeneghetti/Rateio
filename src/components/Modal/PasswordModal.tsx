@@ -12,11 +12,11 @@ interface Props {
 const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckPassword = () => {
-    setLoading(true);
-    debugger;
+    setIsLoading(true);
+
     axios
       .post("/api/password", {
         id: id,
@@ -26,12 +26,12 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
         if (response.data.code === 403) {
           setErrorMsg(true);
           setTimeout(() => setErrorMsg(false), 3000);
+          setIsLoading(false);
         } else {
           setIsOpen(false);
+          setIsLoading(false);
         }
       });
-
-    setLoading(false);
   };
 
   return (
@@ -50,8 +50,10 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
 
       <div className="fixed inset-0 overflow-y-auto">
         <div className="flex min-h-full flex-col justify-center items-center content-center">
-          {loading ? (
-            <Spinner customClass="fill-black" size="h-20 w-20" />
+          {isLoading ? (
+            <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
+              <Spinner customClass="fill-black" size="h-20 w-20" />
+            </div>
           ) : (
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <div className="flex flex-col gap-4">

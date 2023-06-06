@@ -23,6 +23,8 @@ import PasswordModal from "../components/Modal/PasswordModal";
 import DialogModal from "../components/Modal/DialogModal";
 import NewPasswordModal from "../components/Modal/NewPasswordModal";
 import PasswordModalEdit from "../components/Modal/PasswordModalEdit";
+import Spinner from "../components/Spinner/Spinner";
+import { createFalse } from "typescript";
 
 type Result = {
   result: Data;
@@ -43,6 +45,7 @@ interface Props {
 
 export default function Resultado({ data, isView }: Props) {
   const [newData, setNewData] = useState<Data | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const [findHowManyPayWithoutDiferences, setFindHowManyPayWithoutDiferences] =
     useState([]);
@@ -113,6 +116,8 @@ export default function Resultado({ data, isView }: Props) {
   }
 
   function handleSaveRateio(password: string) {
+    setLoading(true);
+
     const saveData = JSON.stringify({
       listOfParticipants: newData?.listOfParticipants,
       participantsShare: newData?.participantsShare,
@@ -133,9 +138,11 @@ export default function Resultado({ data, isView }: Props) {
         if (response.data.code === 200) {
           setErrorMessage("Rateio Salvo com sucesso!");
           setIsOpenDialogModal(true);
+          setLoading(false);
         } else {
           setErrorMessage("Senha Invalida!");
           setIsOpenDialogModal(true);
+          setLoading(false);
         }
       });
 
@@ -143,6 +150,8 @@ export default function Resultado({ data, isView }: Props) {
   }
 
   function handleCreateRateio(newPassword: string) {
+    setLoading(true);
+
     const createData = JSON.stringify({
       listOfParticipants: newData?.listOfParticipants,
       participantsShare: newData?.participantsShare,
@@ -170,6 +179,7 @@ export default function Resultado({ data, isView }: Props) {
             id: response.data.productResult.id,
           }));
         }
+        setLoading(false);
       });
   }
 
@@ -374,6 +384,14 @@ export default function Resultado({ data, isView }: Props) {
   //     <img src={`data:image/svg+xml;utf8,${svg}`} />
   //   </div>
   // );
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-20 w-full h-full flex justify-center items-center bg-rateio bg-opacity-90 top-0 left-0">
+        <Spinner customClass="fill-black" size="h-20 w-20" />
+      </div>
+    );
+  }
 
   if (isOpenPassword) {
     return (
