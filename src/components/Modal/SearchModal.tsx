@@ -57,6 +57,7 @@ const SearchModal = ({ isOpen, setIsOpen }: Props) => {
                   <input
                     id="codigo"
                     name="codigo"
+                    type="number"
                     placeholder="Codigo"
                     className="bg-theme-4 py-2 px-4 rounded lg:text-2xl placeholder:text-black w-full font-bold"
                     value={id}

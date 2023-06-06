@@ -118,7 +118,7 @@ export default function Resultado({ data, isView }: Props) {
       participantsShare: newData?.participantsShare,
       nomeRateio: newData?.nomeRateio,
     });
-    
+
     const pakoDeflated = pako.deflate(saveData);
 
     const pakoEncoded64 = encodeBase64(pakoDeflated);
@@ -160,7 +160,9 @@ export default function Resultado({ data, isView }: Props) {
       })
       .then((response) => {
         if (response.status === 200) {
-          setErrorMessage("Rateio Criado com sucesso!");
+          setErrorMessage(
+            `Rateio Criado com sucesso! Codigo do Rateio: ${response.data.productResult.id}`
+          );
           setIsOpenDialogModal(true);
           setIsOpenNewPassword(false);
           setNewData((old: any) => ({
@@ -171,6 +173,7 @@ export default function Resultado({ data, isView }: Props) {
       });
   }
 
+  console.log(newData)
   useEffect(() => {
     if (
       newData?.listOfParticipants.length &&
@@ -384,7 +387,14 @@ export default function Resultado({ data, isView }: Props) {
   }
   return (
     <div className="max-w-[800px] mx-auto flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-white">{newData?.nomeRateio}</h1>
+      <div className="flex flex-col items-center justify-center gap-4">
+        <h1 className="text-4xl font-bold text-white">{newData?.nomeRateio}</h1>
+        {newData?.id && (
+          <h1 className="text-2xl font-bold text-white">
+            Codigo do Rateio: {newData?.id}
+          </h1>
+        )}
+      </div>
       <div className="my-10 h-fit w-full flex flex-wrap gap-10 justify-center">
         <CardResultado
           findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
