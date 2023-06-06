@@ -49,6 +49,7 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
               <input
                 id="password"
                 name="password"
+                type="password"
                 placeholder="Senha"
                 className="bg-theme-4 py-2 px-4 rounded lg:text-2xl placeholder:text-black w-full font-bold"
                 value={password}

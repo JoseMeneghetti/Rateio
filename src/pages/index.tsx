@@ -99,7 +99,7 @@ export default function Home({ data }: Props) {
     <>
       <div className="max-w-[800px] mx-auto flex flex-col items-center">
         <div className="flex flex-col gap-8 justify-center">
-          <div className="flex gap-8 justify-center">
+          <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
             <button
               className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
               onClick={() => handleReset()}
