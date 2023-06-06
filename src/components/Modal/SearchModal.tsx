@@ -9,14 +9,15 @@ interface Props {
   setIsOpen(value: boolean): void;
 }
 const SearchModal = ({ isOpen, setIsOpen }: Props) => {
+
   const [id, setId] = useState("");
   const router = useRouter();
   function closeModal() {
     setIsOpen(false);
   }
 
-  const handleSearch = () => {
-    router.push(`view/${id}`);
+  const handleSearch = async () => {
+    router.push(`${process.env.NEXT_PUBLIC_DOMAIN_URL}/view/${id}`);
   };
 
   return (

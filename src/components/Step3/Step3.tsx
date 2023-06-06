@@ -13,12 +13,14 @@ interface Props {
   listOfParticipants: ListOfParticipants[] | any;
   nomeRateio: string;
   findHowManyPayWithoutDiferences?: FindHowManyPayWithoutDiferences[];
+  id: string | null
 }
 
 export default function Step3({
   listOfParticipants,
   nomeRateio,
   findHowManyPayWithoutDiferences,
+  id
 }: Props) {
   const [typesOfExpenses, setTypesOfExpenses] = useState([]);
   const [names, setNames] = useState([]);
@@ -76,15 +78,11 @@ export default function Step3({
 
     const pakoEncoded64 = encodeBase64(pakoDeflated);
 
-    const savedID = localStorage.getItem("rateio-id");
-
-    localStorage.removeItem("rateio-id");
-
     router.push({
       pathname: "/resultado",
       query: {
         result: pakoEncoded64,
-        id: savedID ?? null
+        id: id ?? null
       },
     });
   }

@@ -1,18 +1,31 @@
 import { Transition } from "@headlessui/react";
-import { MagnifyingGlass } from "phosphor-react";
+import axios from "axios";
 import { Fragment, useState } from "react";
 
 interface Props {
   isOpen: boolean;
-  setInsertedPassword(value: string): void;
-  errorMsg: boolean;
+  setIsOpen(value: boolean): void;
+  id: number | null;
 }
 
-const PasswordModal = ({ isOpen, setInsertedPassword, errorMsg }: Props) => {
+const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const handleCheckPassword = () => {
-    setInsertedPassword(password);
+    axios
+      .post("/api/password", {
+        id: id,
+        password: password,
+      })
+      .then((response) => {
+        if (response.data.code === 403) {
+          setErrorMsg(true);
+          setTimeout(() => setErrorMsg(false), 3000);
+        } else {
+          setIsOpen(false);
+        }
+      });
   };
 
   return (

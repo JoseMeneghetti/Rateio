@@ -11,6 +11,7 @@ datasource db {
 }
 
 model Rateio {
-  id     Int    @id @default(autoincrement())
-  rateio String
+  id       Int    @id @default(autoincrement())
+  rateio   String
+  password String
 }

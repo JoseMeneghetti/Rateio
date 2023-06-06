@@ -1,5 +1,10 @@
 import { GetServerSideProps } from "next";
-import { ArrowFatLineRight, ArrowsClockwise, MagnifyingGlass, PlusCircle } from "phosphor-react";
+import {
+  ArrowFatLineRight,
+  ArrowsClockwise,
+  MagnifyingGlass,
+  PlusCircle,
+} from "phosphor-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Step2 from "../components/Step2/Step2";
 import Step3 from "../components/Step3/Step3";
@@ -37,6 +42,7 @@ export default function Home({ data }: Props) {
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState<string | null>(null);
 
   const formRef = useRef<any>(null);
   const router = useRouter();
@@ -50,6 +56,7 @@ export default function Home({ data }: Props) {
     setFindHowManyPayWithoutDiferences([]);
     setnomeRateio("");
     setStep2(false);
+    setId(null)
   }, []);
 
   //control persistence
@@ -59,13 +66,17 @@ export default function Home({ data }: Props) {
     const savedDiferences = localStorage.getItem(
       "findHowManyPayWithoutDiferences"
     );
-
+    const id = localStorage.getItem("rateio-id");
     if (savedParticipants || savedNome || savedDiferences) {
       savedParticipants && setListOfParticipants(JSON.parse(savedParticipants));
       savedDiferences &&
         setFindHowManyPayWithoutDiferences(JSON.parse(savedDiferences));
       savedNome && setnomeRateio(savedNome);
       setStep2(true);
+    }
+    if (id) {
+      setId(id);
+      localStorage.removeItem("rateio-id");
     }
   }, []);
 
@@ -163,6 +174,7 @@ export default function Home({ data }: Props) {
             listOfParticipants={listOfParticipants}
             nomeRateio={nomeRateio}
             findHowManyPayWithoutDiferences={findHowManyPayWithoutDiferences}
+            id={id}
           />
         )}
       </div>

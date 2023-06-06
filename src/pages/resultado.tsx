@@ -22,6 +22,7 @@ import { decodeBase64, encodeBase64 } from "../lib/utils/base64";
 import PasswordModal from "../components/Modal/PasswordModal";
 import DialogModal from "../components/Modal/DialogModal";
 import NewPasswordModal from "../components/Modal/NewPasswordModal";
+import PasswordModalEdit from "../components/Modal/PasswordModalEdit";
 
 type Result = {
   result: Data;
@@ -30,7 +31,6 @@ type Result = {
 
 type Data = {
   id: number | null;
-  password: string;
   listOfParticipants: ListOfParticipants[] | any;
   participantsShare: string[] | any;
   nomeRateio: string;
@@ -53,20 +53,20 @@ export default function Resultado({ data, isView }: Props) {
   const [sugestionList, setSugestionList] = useState<any>([]);
   const [shortURL, setShortURL] = useState("");
   const [shortError, setShortError] = useState("");
-  const [insertedPassword, setInsertedPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
+
   const [fade, setFade] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenPassword, setIsOpenPassword] = useState(false);
+  const [isOpenPasswordEdit, setIsOpenPasswordEdit] = useState(false);
   const [isOpenDialogModal, setIsOpenDialogModal] = useState(false);
   const [isOpenNewPassword, setIsOpenNewPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const tableRef = useRef<any>(null);
   const device = useDeviceType();
   const router = useRouter();
-  const [newPassword, setNewPassword] = useState("");
+
   async function GerarLink() {
     if (newData?.id) {
-      const ref = `https://rateio.vercel.app/view/${newData?.id}`;
+      const ref = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/view/${newData?.id}`;
       navigator.clipboard.writeText(ref);
       setShortURL(ref);
     } else {
@@ -78,24 +78,24 @@ export default function Resultado({ data, isView }: Props) {
   useEffect(() => {
     setNewData({
       id: data?.id ?? null,
-      password: data?.result.password,
       listOfParticipants: data?.result.listOfParticipants,
       participantsShare: data?.result.participantsShare,
       nomeRateio: data?.result.nomeRateio,
     });
-  }, []);
+  }, [
+    data?.id,
+    data?.result.listOfParticipants,
+    data?.result.nomeRateio,
+    data?.result.participantsShare,
+  ]);
 
   useEffect(() => {
-    if (isView && newData?.password !== insertedPassword) {
-      if (isOpen) {
-        setErrorMsg(true);
-        setTimeout(() => setErrorMsg(false), 3000);
-      }
-      setIsOpen(true);
+    if (isView) {
+      setIsOpenPassword(true);
     } else {
-      setIsOpen(false);
+      setIsOpenPassword(false);
     }
-  }, [insertedPassword, isView, newData?.password]);
+  }, [isView]);
 
   function handleEditRateio() {
     localStorage.setItem(
@@ -112,14 +112,13 @@ export default function Resultado({ data, isView }: Props) {
     router.push("/");
   }
 
-  function handleSaveRateio() {
+  function handleSaveRateio(password: string) {
     const saveData = JSON.stringify({
-      password: "a",
       listOfParticipants: newData?.listOfParticipants,
       participantsShare: newData?.participantsShare,
       nomeRateio: newData?.nomeRateio,
     });
-
+    
     const pakoDeflated = pako.deflate(saveData);
 
     const pakoEncoded64 = encodeBase64(pakoDeflated);
@@ -128,18 +127,23 @@ export default function Resultado({ data, isView }: Props) {
       .post(`/api/edit`, {
         id: newData?.id,
         rateio: pakoEncoded64,
+        password: password,
       })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.data.code === 200) {
           setErrorMessage("Rateio Salvo com sucesso!");
+          setIsOpenDialogModal(true);
+        } else {
+          setErrorMessage("Senha Invalida!");
           setIsOpenDialogModal(true);
         }
       });
+
+    setIsOpenPasswordEdit(false);
   }
 
-  function handleCreateRateio() {
+  function handleCreateRateio(newPassword: string) {
     const createData = JSON.stringify({
-      password: newPassword,
       listOfParticipants: newData?.listOfParticipants,
       participantsShare: newData?.participantsShare,
       nomeRateio: newData?.nomeRateio,
@@ -152,6 +156,7 @@ export default function Resultado({ data, isView }: Props) {
     axios
       .post("/api/create", {
         rateio: pakoEncoded64,
+        password: newPassword,
       })
       .then((response) => {
         if (response.status === 200) {
@@ -368,12 +373,12 @@ export default function Resultado({ data, isView }: Props) {
   //   </div>
   // );
 
-  if (isOpen) {
+  if (isOpenPassword) {
     return (
       <PasswordModal
-        isOpen={isOpen}
-        setInsertedPassword={setInsertedPassword}
-        errorMsg={errorMsg}
+        isOpen={isOpenPassword}
+        setIsOpen={setIsOpenPassword}
+        id={newData.id}
       />
     );
   }
@@ -453,7 +458,7 @@ export default function Resultado({ data, isView }: Props) {
             </button>
             <button
               className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
-              onClick={() => handleSaveRateio()}
+              onClick={() => setIsOpenPasswordEdit(true)}
             >
               Salvar
               <FloppyDisk size={24} weight="bold" />
@@ -477,8 +482,11 @@ export default function Resultado({ data, isView }: Props) {
       />
       <NewPasswordModal
         isOpen={isOpenNewPassword}
-        setInsertedPassword={setNewPassword}
         handleCreateRateio={handleCreateRateio}
+      />
+      <PasswordModalEdit
+        isOpen={isOpenPasswordEdit}
+        handleSaveRateio={handleSaveRateio}
       />
     </div>
   );

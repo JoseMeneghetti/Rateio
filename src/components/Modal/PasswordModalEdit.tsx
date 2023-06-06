@@ -1,27 +1,20 @@
 import { Transition } from "@headlessui/react";
+import axios from "axios";
 import { MagnifyingGlass } from "phosphor-react";
 import { Fragment, useState } from "react";
 
+type HandleSaveRateio = (password: string) => void;
+
 interface Props {
   isOpen: boolean;
-  handleCreateRateio(password: string): void;
+  handleSaveRateio: HandleSaveRateio;
 }
 
-const NewPasswordModal = ({
-  isOpen,
-  handleCreateRateio,
-}: Props) => {
+const PasswordModalEdit = ({ isOpen, handleSaveRateio }: Props) => {
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [erro, setErro] = useState("");
 
   const handleCheckPassword = () => {
-    if (confirmPassword === password) {
-      handleCreateRateio(password);
-    } else {
-      setErro("As senhas estao diferentes. Tente novamente.");
-      setTimeout(() => setErro(""), 3000);
-    }
+    handleSaveRateio(password);
   };
 
   return (
@@ -40,27 +33,16 @@ const NewPasswordModal = ({
 
       <div className="fixed inset-0 overflow-y-auto">
         <div className="flex min-h-full flex-col justify-center items-center content-center">
-          <div className="flex min-h-full items-center justify-center p-4 text-center flex-col">
-            {erro && (
-              <span className="font-bold my-4 text-red-700">{erro}</span>
-            )}
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
             <div className="flex flex-col gap-4">
               <input
                 id="password"
+                type="password"
                 name="password"
                 placeholder="Senha"
                 className="bg-theme-4 py-2 px-4 rounded lg:text-2xl placeholder:text-black w-full font-bold"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <input
-                id="cpassword"
-                name="cpassword"
-                placeholder="Confirme a Senha"
-                className="bg-theme-4 py-2 px-4 rounded lg:text-2xl placeholder:text-black w-full font-bold"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </div>
@@ -79,4 +61,4 @@ const NewPasswordModal = ({
   );
 };
 
-export default NewPasswordModal;
+export default PasswordModalEdit;
