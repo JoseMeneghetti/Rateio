@@ -2,6 +2,7 @@ import { Transition } from "@headlessui/react";
 import axios from "axios";
 import { Fragment, useState } from "react";
 import Spinner from "../Spinner/Spinner";
+import { useRouter } from "next/router";
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +14,8 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleCheckPassword = () => {
     setIsLoading(true);
@@ -55,8 +58,8 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
               <Spinner customClass="fill-black" size="h-20 w-20" />
             </div>
           ) : (
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <div className="flex flex-col gap-4">
+            <div className="flex min-h-full items-center justify-center p-4 text-center w-full md:max-w-xs flex-col">
+              <div className="flex flex-col gap-4 w-full">
                 <input
                   id="password"
                   name="password"
@@ -68,12 +71,18 @@ const PasswordModal = ({ isOpen, setIsOpen, id }: Props) => {
                   required
                 />
               </div>
-              <div className="flex justify-center p-4">
+              <div className="flex justify-around py-4 w-full">
                 <button
                   className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
                   onClick={() => handleCheckPassword()}
                 >
                   Entrar
+                </button>
+                <button
+                  className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
+                  onClick={() => router.push('/')}
+                >
+                  Voltar
                 </button>
               </div>
             </div>

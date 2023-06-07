@@ -128,6 +128,9 @@ export default function Home({ data }: Props) {
           <h1 className="text-5xl text-center text-white">
             De um nome ao seu rateio
           </h1>
+          <h3 className="text-2xl text-center text-white">
+            Crie um novo Rateio!
+          </h3>
         </div>
         <div className="my-10 bg-theme-5 bg-opacity-90 w-5/6 h-fit rounded-lg p-5">
           <div className="flex justify-start flex-row items-center h-full gap-4">

@@ -472,8 +472,8 @@ export default function Resultado({ data, isView }: Props) {
             className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg lg:text-3xl h-fit flex items-center gap-3 text-theme-4"
             onClick={() => setIsOpenNewPassword(true)}
           >
-            Criar novo Rateio
-            <PencilSimple size={24} weight="bold" />
+            Salvar esse Rateio
+            <FloppyDisk size={24} weight="bold" />
           </button>
         ) : (
           <div className="flex gap-4">
@@ -510,10 +510,12 @@ export default function Resultado({ data, isView }: Props) {
       />
       <NewPasswordModal
         isOpen={isOpenNewPassword}
+        setIsOpen={setIsOpenNewPassword}
         handleCreateRateio={handleCreateRateio}
       />
       <PasswordModalEdit
         isOpen={isOpenPasswordEdit}
+        setIsOpen={setIsOpenPasswordEdit}
         handleSaveRateio={handleSaveRateio}
       />
     </div>

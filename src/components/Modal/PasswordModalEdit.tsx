@@ -7,10 +7,11 @@ type HandleSaveRateio = (password: string) => void;
 
 interface Props {
   isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
   handleSaveRateio: HandleSaveRateio;
 }
 
-const PasswordModalEdit = ({ isOpen, handleSaveRateio }: Props) => {
+const PasswordModalEdit = ({ isOpen, setIsOpen, handleSaveRateio }: Props) => {
   const [password, setPassword] = useState("");
 
   const handleCheckPassword = () => {
@@ -33,8 +34,8 @@ const PasswordModalEdit = ({ isOpen, handleSaveRateio }: Props) => {
 
       <div className="fixed inset-0 overflow-y-auto">
         <div className="flex min-h-full flex-col justify-center items-center content-center">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <div className="flex flex-col gap-4">
+          <div className="flex flex-col min-h-full items-center justify-center p-4 text-center w-full md:max-w-xs">
+            <div className="flex flex-col gap-4 w-full">
               <input
                 id="password"
                 type="password"
@@ -46,12 +47,18 @@ const PasswordModalEdit = ({ isOpen, handleSaveRateio }: Props) => {
                 required
               />
             </div>
-            <div className="flex justify-center p-4">
+            <div className="flex justify-around py-4 w-full md:max-w-xs">
               <button
-                className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-3xl h-fit flex items-center gap-3 text-theme-4"
+                className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-xl h-fit flex items-center gap-3 text-theme-4"
                 onClick={() => handleCheckPassword()}
               >
-                Entrar
+                Editar e Salvar
+              </button>
+              <button
+                className="px-4 py-2 bg-theme-5 hover:bg-theme-2 text-theme-6 rounded-lg text-xl h-fit flex items-center gap-3 text-theme-4"
+                onClick={() => setIsOpen(false)}
+              >
+                Fechar
               </button>
             </div>
           </div>
