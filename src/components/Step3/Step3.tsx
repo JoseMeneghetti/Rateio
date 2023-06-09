@@ -38,7 +38,7 @@ export default function Step3({
 
     const participantsShare = dataForm.reduce(
       (total: any, currentElement: any) => {
-        const splited = currentElement.split("-");
+        const splited = currentElement.split("¥");
         const typeOfExpense = splited[0];
         const participantName = splited[1];
 
@@ -50,7 +50,7 @@ export default function Step3({
         }
         const icon = listOfParticipants.find(
           (el: ListOfParticipants) => el.description === typeOfExpense
-        ).icon;
+        )?.icon;
         return [
           ...total,
           {
@@ -129,7 +129,7 @@ export default function Step3({
                 {names.map((name: string) => (
                   <div className="flex items-center" key={name}>
                     <SwitchButton
-                      name={`${expenseName}-${name}`}
+                      name={`${expenseName}¥${name}`}
                       findHowManyPayWithoutDiferences={
                         findHowManyPayWithoutDiferences
                       }

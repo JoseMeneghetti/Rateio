@@ -53,6 +53,7 @@ export default function Home({ data }: Props) {
     localStorage.removeItem("listOfParticipants");
     localStorage.removeItem("nomeRateio");
     localStorage.removeItem("findHowManyPayWithoutDiferences");
+    localStorage.removeItem("participantsShare")
     setListOfParticipants([]);
 
     setFindHowManyPayWithoutDiferences([]);

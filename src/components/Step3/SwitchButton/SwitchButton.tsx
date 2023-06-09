@@ -18,7 +18,7 @@ export default function SwitchButton({
 
 
   useEffect(() => {
-    const splited = name.split("-");
+    const splited = name.split("¥");
     const typeOfExpense = splited[0];
     const participantName = splited[1];
     const findType: FindHowManyPayWithoutDiferences[] | any =

@@ -198,7 +198,7 @@ export default function Resultado({ data, isView }: Props) {
           const perPerson = currentElement.participants.map((name) => {
             return {
               name: name,
-              value: findWhoPaid.expenses / currentElement.participants.length,
+              value: findWhoPaid?.expenses / currentElement.participants.length,
             };
           });
 
