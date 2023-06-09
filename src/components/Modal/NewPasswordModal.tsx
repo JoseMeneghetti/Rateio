@@ -38,7 +38,7 @@ const NewPasswordModal = ({ isOpen, handleCreateRateio, setIsOpen }: Props) => {
 
       <div className="fixed inset-0 overflow-y-auto">
         <div className="flex min-h-full flex-col justify-center items-center content-center">
-          <div className="flex min-h-full items-center justify-center p-4 text-center flex-col ">
+          <div className="flex min-h-full items-center justify-center p-4 text-center flex-col w-full md:max-w-xs">
             {erro && (
               <span className="font-bold my-4 text-red-700">{erro}</span>
             )}
