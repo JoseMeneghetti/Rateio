@@ -26,6 +26,8 @@ export const mockIcons = [
     "wine-glass",
     "disposable",
     "taxi",
+    "delivery-car",
+    "cabrio-car",
     "vape",
     "hookah",
     "drinksparty",
