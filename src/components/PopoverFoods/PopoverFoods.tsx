@@ -21,9 +21,9 @@ export default function PopoverFoods({ setIcon, icon }: Props) {
         </Popover.Button>
       )}
 
-      <Popover.Panel className="absolute z-10 -bottom-64 md:bottom-9 md:right-0 -translate-x-[6.5rem] w-[300px] md:-translate-x-0 md:w-[500px]">
+      <Popover.Panel className="absolute z-10 right-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80">
         {({ close }) => (
-          <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5 shadow-custom w-[300px] md:w-[500px]  ">
+          <div className="overflow-y-auto max-h-96 rounded-lg ring-1 ring-black ring-opacity-5 shadow-custom">
             <div className="relative bg-theme-5 p-7 flex flex-wrap gap-2 justify-center w-full">
               {mockIcons.map((iconName) => (
                 <div key={iconName} className="">
